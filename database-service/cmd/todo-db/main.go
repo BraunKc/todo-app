@@ -4,9 +4,9 @@ import (
 	"log/slog"
 	"os"
 
-	"gihtub.com/braunkc/todo-db/config"
-	database "gihtub.com/braunkc/todo-db/internal/infra/database/postgres"
-	"gihtub.com/braunkc/todo-db/pkg/log"
+	"github.com/braunkc/todo-db/config"
+	database "github.com/braunkc/todo-db/internal/infra/database/postgres"
+	"github.com/braunkc/todo-db/pkg/log"
 )
 
 func main() {
@@ -30,7 +30,8 @@ func main() {
 	}
 	l.Info("config inited", slog.Any("cfg", cfg))
 
-	_, err = database.NewDatabaseService(cfg)
+	mapper := database.NewMapper()
+	db, err := database.NewDatabaseService(cfg, mapper)
 	if err != nil {
 		l.Error("failed to connect to DB", slog.String("err", err.Error()))
 		os.Exit(1)

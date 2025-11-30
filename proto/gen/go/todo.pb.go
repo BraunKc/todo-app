@@ -370,27 +370,27 @@ func (x *CreateUserResponse) GetUser() *User {
 	return nil
 }
 
-type GetUserRequest struct {
+type GetUserByUsernameRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetUserRequest) Reset() {
-	*x = GetUserRequest{}
+func (x *GetUserByUsernameRequest) Reset() {
+	*x = GetUserByUsernameRequest{}
 	mi := &file_todo_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetUserRequest) String() string {
+func (x *GetUserByUsernameRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetUserRequest) ProtoMessage() {}
+func (*GetUserByUsernameRequest) ProtoMessage() {}
 
-func (x *GetUserRequest) ProtoReflect() protoreflect.Message {
+func (x *GetUserByUsernameRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_todo_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -402,39 +402,39 @@ func (x *GetUserRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetUserRequest.ProtoReflect.Descriptor instead.
-func (*GetUserRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetUserByUsernameRequest.ProtoReflect.Descriptor instead.
+func (*GetUserByUsernameRequest) Descriptor() ([]byte, []int) {
 	return file_todo_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetUserRequest) GetUsername() string {
+func (x *GetUserByUsernameRequest) GetUsername() string {
 	if x != nil {
 		return x.Username
 	}
 	return ""
 }
 
-type GetUserResponse struct {
+type GetUserByUsernameResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetUserResponse) Reset() {
-	*x = GetUserResponse{}
+func (x *GetUserByUsernameResponse) Reset() {
+	*x = GetUserByUsernameResponse{}
 	mi := &file_todo_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetUserResponse) String() string {
+func (x *GetUserByUsernameResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetUserResponse) ProtoMessage() {}
+func (*GetUserByUsernameResponse) ProtoMessage() {}
 
-func (x *GetUserResponse) ProtoReflect() protoreflect.Message {
+func (x *GetUserByUsernameResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_todo_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -446,39 +446,39 @@ func (x *GetUserResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetUserResponse.ProtoReflect.Descriptor instead.
-func (*GetUserResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetUserByUsernameResponse.ProtoReflect.Descriptor instead.
+func (*GetUserByUsernameResponse) Descriptor() ([]byte, []int) {
 	return file_todo_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *GetUserResponse) GetUser() *User {
+func (x *GetUserByUsernameResponse) GetUser() *User {
 	if x != nil {
 		return x.User
 	}
 	return nil
 }
 
-type DeleteUserRequest struct {
+type DeleteUserByIDRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteUserRequest) Reset() {
-	*x = DeleteUserRequest{}
+func (x *DeleteUserByIDRequest) Reset() {
+	*x = DeleteUserByIDRequest{}
 	mi := &file_todo_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteUserRequest) String() string {
+func (x *DeleteUserByIDRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteUserRequest) ProtoMessage() {}
+func (*DeleteUserByIDRequest) ProtoMessage() {}
 
-func (x *DeleteUserRequest) ProtoReflect() protoreflect.Message {
+func (x *DeleteUserByIDRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_todo_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -490,38 +490,38 @@ func (x *DeleteUserRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteUserRequest.ProtoReflect.Descriptor instead.
-func (*DeleteUserRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteUserByIDRequest.ProtoReflect.Descriptor instead.
+func (*DeleteUserByIDRequest) Descriptor() ([]byte, []int) {
 	return file_todo_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *DeleteUserRequest) GetId() string {
+func (x *DeleteUserByIDRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-type DeleteUserResponse struct {
+type DeleteUserByIDResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteUserResponse) Reset() {
-	*x = DeleteUserResponse{}
+func (x *DeleteUserByIDResponse) Reset() {
+	*x = DeleteUserByIDResponse{}
 	mi := &file_todo_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteUserResponse) String() string {
+func (x *DeleteUserByIDResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteUserResponse) ProtoMessage() {}
+func (*DeleteUserByIDResponse) ProtoMessage() {}
 
-func (x *DeleteUserResponse) ProtoReflect() protoreflect.Message {
+func (x *DeleteUserByIDResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_todo_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -533,8 +533,8 @@ func (x *DeleteUserResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteUserResponse.ProtoReflect.Descriptor instead.
-func (*DeleteUserResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteUserByIDResponse.ProtoReflect.Descriptor instead.
+func (*DeleteUserByIDResponse) Descriptor() ([]byte, []int) {
 	return file_todo_proto_rawDescGZIP(), []int{6}
 }
 
@@ -1110,27 +1110,27 @@ func (x *UpdateTaskResponse) GetTask() *Task {
 	return nil
 }
 
-type DeleteTasksRequest struct {
+type DeleteTasksByIDRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            []string               `protobuf:"bytes,1,rep,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteTasksRequest) Reset() {
-	*x = DeleteTasksRequest{}
+func (x *DeleteTasksByIDRequest) Reset() {
+	*x = DeleteTasksByIDRequest{}
 	mi := &file_todo_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteTasksRequest) String() string {
+func (x *DeleteTasksByIDRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteTasksRequest) ProtoMessage() {}
+func (*DeleteTasksByIDRequest) ProtoMessage() {}
 
-func (x *DeleteTasksRequest) ProtoReflect() protoreflect.Message {
+func (x *DeleteTasksByIDRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_todo_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1142,38 +1142,38 @@ func (x *DeleteTasksRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteTasksRequest.ProtoReflect.Descriptor instead.
-func (*DeleteTasksRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteTasksByIDRequest.ProtoReflect.Descriptor instead.
+func (*DeleteTasksByIDRequest) Descriptor() ([]byte, []int) {
 	return file_todo_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *DeleteTasksRequest) GetId() []string {
+func (x *DeleteTasksByIDRequest) GetId() []string {
 	if x != nil {
 		return x.Id
 	}
 	return nil
 }
 
-type DeleteTasksResponse struct {
+type DeleteTasksByIDResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteTasksResponse) Reset() {
-	*x = DeleteTasksResponse{}
+func (x *DeleteTasksByIDResponse) Reset() {
+	*x = DeleteTasksByIDResponse{}
 	mi := &file_todo_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteTasksResponse) String() string {
+func (x *DeleteTasksByIDResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteTasksResponse) ProtoMessage() {}
+func (*DeleteTasksByIDResponse) ProtoMessage() {}
 
-func (x *DeleteTasksResponse) ProtoReflect() protoreflect.Message {
+func (x *DeleteTasksByIDResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_todo_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1185,8 +1185,8 @@ func (x *DeleteTasksResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteTasksResponse.ProtoReflect.Descriptor instead.
-func (*DeleteTasksResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteTasksByIDResponse.ProtoReflect.Descriptor instead.
+func (*DeleteTasksByIDResponse) Descriptor() ([]byte, []int) {
 	return file_todo_proto_rawDescGZIP(), []int{17}
 }
 
@@ -1205,15 +1205,15 @@ const file_todo_proto_rawDesc = "" +
 	"\rpassword_hash\x18\x02 \x01(\tR\fpasswordHash\"4\n" +
 	"\x12CreateUserResponse\x12\x1e\n" +
 	"\x04user\x18\x01 \x01(\v2\n" +
-	".todo.UserR\x04user\",\n" +
-	"\x0eGetUserRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\"1\n" +
-	"\x0fGetUserResponse\x12\x1e\n" +
+	".todo.UserR\x04user\"6\n" +
+	"\x18GetUserByUsernameRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\";\n" +
+	"\x19GetUserByUsernameResponse\x12\x1e\n" +
 	"\x04user\x18\x01 \x01(\v2\n" +
-	".todo.UserR\x04user\"#\n" +
-	"\x11DeleteUserRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x14\n" +
-	"\x12DeleteUserResponse\"\xe2\x01\n" +
+	".todo.UserR\x04user\"'\n" +
+	"\x15DeleteUserByIDRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x18\n" +
+	"\x16DeleteUserByIDResponse\"\xe2\x01\n" +
 	"\x04Task\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
@@ -1269,10 +1269,10 @@ const file_todo_proto_rawDesc = "" +
 	"\t_due_date\"4\n" +
 	"\x12UpdateTaskResponse\x12\x1e\n" +
 	"\x04task\x18\x01 \x01(\v2\n" +
-	".todo.TaskR\x04task\"$\n" +
-	"\x12DeleteTasksRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x03(\tR\x02id\"\x15\n" +
-	"\x13DeleteTasksResponse*1\n" +
+	".todo.TaskR\x04task\"(\n" +
+	"\x16DeleteTasksByIDRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x03(\tR\x02id\"\x19\n" +
+	"\x17DeleteTasksByIDResponse*1\n" +
 	"\n" +
 	"TaskStatus\x12\b\n" +
 	"\x04TODO\x10\x00\x12\x0f\n" +
@@ -1290,19 +1290,18 @@ const file_todo_proto_rawDesc = "" +
 	"CREATED_AT\x10\x02*\"\n" +
 	"\rSortDirection\x12\a\n" +
 	"\x03ASC\x10\x00\x12\b\n" +
-	"\x04DESC\x10\x012\xcc\x03\n" +
+	"\x04DESC\x10\x012\x82\x04\n" +
 	"\x0fDataBaseService\x12?\n" +
 	"\n" +
-	"CreateUser\x12\x17.todo.CreateUserRequest\x1a\x18.todo.CreateUserResponse\x126\n" +
-	"\aGetUser\x12\x14.todo.GetUserRequest\x1a\x15.todo.GetUserResponse\x12?\n" +
-	"\n" +
-	"DeleteUser\x12\x17.todo.DeleteUserRequest\x1a\x18.todo.DeleteUserResponse\x12?\n" +
+	"CreateUser\x12\x17.todo.CreateUserRequest\x1a\x18.todo.CreateUserResponse\x12T\n" +
+	"\x11GetUserByUsername\x12\x1e.todo.GetUserByUsernameRequest\x1a\x1f.todo.GetUserByUsernameResponse\x12K\n" +
+	"\x0eDeleteUserByID\x12\x1b.todo.DeleteUserByIDRequest\x1a\x1c.todo.DeleteUserByIDResponse\x12?\n" +
 	"\n" +
 	"CreateTask\x12\x17.todo.CreateTaskRequest\x1a\x18.todo.CreateTaskResponse\x129\n" +
 	"\bGetTasks\x12\x15.todo.GetTasksRequest\x1a\x16.todo.GetTasksResponse\x12?\n" +
 	"\n" +
-	"UpdateTask\x12\x17.todo.UpdateTaskRequest\x1a\x18.todo.UpdateTaskResponse\x12B\n" +
-	"\vDeleteTasks\x12\x18.todo.DeleteTasksRequest\x1a\x19.todo.DeleteTasksResponseB$Z\"braunkc/todo-proto/gen/go;todoGRPCb\x06proto3"
+	"UpdateTask\x12\x17.todo.UpdateTaskRequest\x1a\x18.todo.UpdateTaskResponse\x12N\n" +
+	"\x0fDeleteTasksByID\x12\x1c.todo.DeleteTasksByIDRequest\x1a\x1d.todo.DeleteTasksByIDResponseB$Z\"braunkc/todo-proto/gen/go;todoGRPCb\x06proto3"
 
 var (
 	file_todo_proto_rawDescOnce sync.Once
@@ -1319,32 +1318,32 @@ func file_todo_proto_rawDescGZIP() []byte {
 var file_todo_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
 var file_todo_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_todo_proto_goTypes = []any{
-	(TaskStatus)(0),             // 0: todo.TaskStatus
-	(TaskPriority)(0),           // 1: todo.TaskPriority
-	(SortField)(0),              // 2: todo.SortField
-	(SortDirection)(0),          // 3: todo.SortDirection
-	(*User)(nil),                // 4: todo.User
-	(*CreateUserRequest)(nil),   // 5: todo.CreateUserRequest
-	(*CreateUserResponse)(nil),  // 6: todo.CreateUserResponse
-	(*GetUserRequest)(nil),      // 7: todo.GetUserRequest
-	(*GetUserResponse)(nil),     // 8: todo.GetUserResponse
-	(*DeleteUserRequest)(nil),   // 9: todo.DeleteUserRequest
-	(*DeleteUserResponse)(nil),  // 10: todo.DeleteUserResponse
-	(*Task)(nil),                // 11: todo.Task
-	(*CreateTaskRequest)(nil),   // 12: todo.CreateTaskRequest
-	(*CreateTaskResponse)(nil),  // 13: todo.CreateTaskResponse
-	(*Filters)(nil),             // 14: todo.Filters
-	(*OrderBy)(nil),             // 15: todo.OrderBy
-	(*GetTasksRequest)(nil),     // 16: todo.GetTasksRequest
-	(*GetTasksResponse)(nil),    // 17: todo.GetTasksResponse
-	(*UpdateTaskRequest)(nil),   // 18: todo.UpdateTaskRequest
-	(*UpdateTaskResponse)(nil),  // 19: todo.UpdateTaskResponse
-	(*DeleteTasksRequest)(nil),  // 20: todo.DeleteTasksRequest
-	(*DeleteTasksResponse)(nil), // 21: todo.DeleteTasksResponse
+	(TaskStatus)(0),                   // 0: todo.TaskStatus
+	(TaskPriority)(0),                 // 1: todo.TaskPriority
+	(SortField)(0),                    // 2: todo.SortField
+	(SortDirection)(0),                // 3: todo.SortDirection
+	(*User)(nil),                      // 4: todo.User
+	(*CreateUserRequest)(nil),         // 5: todo.CreateUserRequest
+	(*CreateUserResponse)(nil),        // 6: todo.CreateUserResponse
+	(*GetUserByUsernameRequest)(nil),  // 7: todo.GetUserByUsernameRequest
+	(*GetUserByUsernameResponse)(nil), // 8: todo.GetUserByUsernameResponse
+	(*DeleteUserByIDRequest)(nil),     // 9: todo.DeleteUserByIDRequest
+	(*DeleteUserByIDResponse)(nil),    // 10: todo.DeleteUserByIDResponse
+	(*Task)(nil),                      // 11: todo.Task
+	(*CreateTaskRequest)(nil),         // 12: todo.CreateTaskRequest
+	(*CreateTaskResponse)(nil),        // 13: todo.CreateTaskResponse
+	(*Filters)(nil),                   // 14: todo.Filters
+	(*OrderBy)(nil),                   // 15: todo.OrderBy
+	(*GetTasksRequest)(nil),           // 16: todo.GetTasksRequest
+	(*GetTasksResponse)(nil),          // 17: todo.GetTasksResponse
+	(*UpdateTaskRequest)(nil),         // 18: todo.UpdateTaskRequest
+	(*UpdateTaskResponse)(nil),        // 19: todo.UpdateTaskResponse
+	(*DeleteTasksByIDRequest)(nil),    // 20: todo.DeleteTasksByIDRequest
+	(*DeleteTasksByIDResponse)(nil),   // 21: todo.DeleteTasksByIDResponse
 }
 var file_todo_proto_depIdxs = []int32{
 	4,  // 0: todo.CreateUserResponse.user:type_name -> todo.User
-	4,  // 1: todo.GetUserResponse.user:type_name -> todo.User
+	4,  // 1: todo.GetUserByUsernameResponse.user:type_name -> todo.User
 	0,  // 2: todo.Task.status:type_name -> todo.TaskStatus
 	1,  // 3: todo.Task.priority:type_name -> todo.TaskPriority
 	1,  // 4: todo.CreateTaskRequest.priority:type_name -> todo.TaskPriority
@@ -1360,19 +1359,19 @@ var file_todo_proto_depIdxs = []int32{
 	1,  // 14: todo.UpdateTaskRequest.priority:type_name -> todo.TaskPriority
 	11, // 15: todo.UpdateTaskResponse.task:type_name -> todo.Task
 	5,  // 16: todo.DataBaseService.CreateUser:input_type -> todo.CreateUserRequest
-	7,  // 17: todo.DataBaseService.GetUser:input_type -> todo.GetUserRequest
-	9,  // 18: todo.DataBaseService.DeleteUser:input_type -> todo.DeleteUserRequest
+	7,  // 17: todo.DataBaseService.GetUserByUsername:input_type -> todo.GetUserByUsernameRequest
+	9,  // 18: todo.DataBaseService.DeleteUserByID:input_type -> todo.DeleteUserByIDRequest
 	12, // 19: todo.DataBaseService.CreateTask:input_type -> todo.CreateTaskRequest
 	16, // 20: todo.DataBaseService.GetTasks:input_type -> todo.GetTasksRequest
 	18, // 21: todo.DataBaseService.UpdateTask:input_type -> todo.UpdateTaskRequest
-	20, // 22: todo.DataBaseService.DeleteTasks:input_type -> todo.DeleteTasksRequest
+	20, // 22: todo.DataBaseService.DeleteTasksByID:input_type -> todo.DeleteTasksByIDRequest
 	6,  // 23: todo.DataBaseService.CreateUser:output_type -> todo.CreateUserResponse
-	8,  // 24: todo.DataBaseService.GetUser:output_type -> todo.GetUserResponse
-	10, // 25: todo.DataBaseService.DeleteUser:output_type -> todo.DeleteUserResponse
+	8,  // 24: todo.DataBaseService.GetUserByUsername:output_type -> todo.GetUserByUsernameResponse
+	10, // 25: todo.DataBaseService.DeleteUserByID:output_type -> todo.DeleteUserByIDResponse
 	13, // 26: todo.DataBaseService.CreateTask:output_type -> todo.CreateTaskResponse
 	17, // 27: todo.DataBaseService.GetTasks:output_type -> todo.GetTasksResponse
 	19, // 28: todo.DataBaseService.UpdateTask:output_type -> todo.UpdateTaskResponse
-	21, // 29: todo.DataBaseService.DeleteTasks:output_type -> todo.DeleteTasksResponse
+	21, // 29: todo.DataBaseService.DeleteTasksByID:output_type -> todo.DeleteTasksByIDResponse
 	23, // [23:30] is the sub-list for method output_type
 	16, // [16:23] is the sub-list for method input_type
 	16, // [16:16] is the sub-list for extension type_name

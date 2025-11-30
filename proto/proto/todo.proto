@@ -4,13 +4,13 @@ option go_package = "braunkc/todo-proto/gen/go;todoGRPC";
 
 service DataBaseService {
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
-    rpc GetUser(GetUserRequest) returns (GetUserResponse);
-    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+    rpc GetUserByUsername(GetUserByUsernameRequest) returns (GetUserByUsernameResponse);
+    rpc DeleteUserByID(DeleteUserByIDRequest) returns (DeleteUserByIDResponse);
 
     rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
     rpc GetTasks(GetTasksRequest) returns (GetTasksResponse);
     rpc UpdateTask(UpdateTaskRequest) returns (UpdateTaskResponse);
-    rpc DeleteTasks(DeleteTasksRequest) returns (DeleteTasksResponse);
+    rpc DeleteTasksByID(DeleteTasksByIDRequest) returns (DeleteTasksByIDResponse);
 }
 
 message User {
@@ -27,17 +27,17 @@ message CreateUserResponse {
     User user = 1;
 }
 
-message GetUserRequest {
+message GetUserByUsernameRequest {
     string username = 1;
 }
-message GetUserResponse {
+message GetUserByUsernameResponse {
     User user = 1;
 }
 
-message DeleteUserRequest {
+message DeleteUserByIDRequest {
     string id = 1;
 }
-message DeleteUserResponse {}
+message DeleteUserByIDResponse {}
 
 enum TaskStatus {
     TODO = 0;
@@ -117,7 +117,7 @@ message UpdateTaskResponse {
     Task task = 1;
 }
 
-message DeleteTasksRequest {
+message DeleteTasksByIDRequest {
     repeated string id = 1;
 }
-message DeleteTasksResponse {}
+message DeleteTasksByIDResponse {}

@@ -19,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DataBaseService_CreateUser_FullMethodName  = "/todo.DataBaseService/CreateUser"
-	DataBaseService_GetUser_FullMethodName     = "/todo.DataBaseService/GetUser"
-	DataBaseService_DeleteUser_FullMethodName  = "/todo.DataBaseService/DeleteUser"
-	DataBaseService_CreateTask_FullMethodName  = "/todo.DataBaseService/CreateTask"
-	DataBaseService_GetTasks_FullMethodName    = "/todo.DataBaseService/GetTasks"
-	DataBaseService_UpdateTask_FullMethodName  = "/todo.DataBaseService/UpdateTask"
-	DataBaseService_DeleteTasks_FullMethodName = "/todo.DataBaseService/DeleteTasks"
+	DataBaseService_CreateUser_FullMethodName        = "/todo.DataBaseService/CreateUser"
+	DataBaseService_GetUserByUsername_FullMethodName = "/todo.DataBaseService/GetUserByUsername"
+	DataBaseService_DeleteUserByID_FullMethodName    = "/todo.DataBaseService/DeleteUserByID"
+	DataBaseService_CreateTask_FullMethodName        = "/todo.DataBaseService/CreateTask"
+	DataBaseService_GetTasks_FullMethodName          = "/todo.DataBaseService/GetTasks"
+	DataBaseService_UpdateTask_FullMethodName        = "/todo.DataBaseService/UpdateTask"
+	DataBaseService_DeleteTasksByID_FullMethodName   = "/todo.DataBaseService/DeleteTasksByID"
 )
 
 // DataBaseServiceClient is the client API for DataBaseService service.
@@ -33,12 +33,12 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DataBaseServiceClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
-	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
-	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
+	GetUserByUsername(ctx context.Context, in *GetUserByUsernameRequest, opts ...grpc.CallOption) (*GetUserByUsernameResponse, error)
+	DeleteUserByID(ctx context.Context, in *DeleteUserByIDRequest, opts ...grpc.CallOption) (*DeleteUserByIDResponse, error)
 	CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*CreateTaskResponse, error)
 	GetTasks(ctx context.Context, in *GetTasksRequest, opts ...grpc.CallOption) (*GetTasksResponse, error)
 	UpdateTask(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*UpdateTaskResponse, error)
-	DeleteTasks(ctx context.Context, in *DeleteTasksRequest, opts ...grpc.CallOption) (*DeleteTasksResponse, error)
+	DeleteTasksByID(ctx context.Context, in *DeleteTasksByIDRequest, opts ...grpc.CallOption) (*DeleteTasksByIDResponse, error)
 }
 
 type dataBaseServiceClient struct {
@@ -59,20 +59,20 @@ func (c *dataBaseServiceClient) CreateUser(ctx context.Context, in *CreateUserRe
 	return out, nil
 }
 
-func (c *dataBaseServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+func (c *dataBaseServiceClient) GetUserByUsername(ctx context.Context, in *GetUserByUsernameRequest, opts ...grpc.CallOption) (*GetUserByUsernameResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetUserResponse)
-	err := c.cc.Invoke(ctx, DataBaseService_GetUser_FullMethodName, in, out, cOpts...)
+	out := new(GetUserByUsernameResponse)
+	err := c.cc.Invoke(ctx, DataBaseService_GetUserByUsername_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dataBaseServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
+func (c *dataBaseServiceClient) DeleteUserByID(ctx context.Context, in *DeleteUserByIDRequest, opts ...grpc.CallOption) (*DeleteUserByIDResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteUserResponse)
-	err := c.cc.Invoke(ctx, DataBaseService_DeleteUser_FullMethodName, in, out, cOpts...)
+	out := new(DeleteUserByIDResponse)
+	err := c.cc.Invoke(ctx, DataBaseService_DeleteUserByID_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,10 +109,10 @@ func (c *dataBaseServiceClient) UpdateTask(ctx context.Context, in *UpdateTaskRe
 	return out, nil
 }
 
-func (c *dataBaseServiceClient) DeleteTasks(ctx context.Context, in *DeleteTasksRequest, opts ...grpc.CallOption) (*DeleteTasksResponse, error) {
+func (c *dataBaseServiceClient) DeleteTasksByID(ctx context.Context, in *DeleteTasksByIDRequest, opts ...grpc.CallOption) (*DeleteTasksByIDResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteTasksResponse)
-	err := c.cc.Invoke(ctx, DataBaseService_DeleteTasks_FullMethodName, in, out, cOpts...)
+	out := new(DeleteTasksByIDResponse)
+	err := c.cc.Invoke(ctx, DataBaseService_DeleteTasksByID_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -124,12 +124,12 @@ func (c *dataBaseServiceClient) DeleteTasks(ctx context.Context, in *DeleteTasks
 // for forward compatibility.
 type DataBaseServiceServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
-	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
-	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
+	GetUserByUsername(context.Context, *GetUserByUsernameRequest) (*GetUserByUsernameResponse, error)
+	DeleteUserByID(context.Context, *DeleteUserByIDRequest) (*DeleteUserByIDResponse, error)
 	CreateTask(context.Context, *CreateTaskRequest) (*CreateTaskResponse, error)
 	GetTasks(context.Context, *GetTasksRequest) (*GetTasksResponse, error)
 	UpdateTask(context.Context, *UpdateTaskRequest) (*UpdateTaskResponse, error)
-	DeleteTasks(context.Context, *DeleteTasksRequest) (*DeleteTasksResponse, error)
+	DeleteTasksByID(context.Context, *DeleteTasksByIDRequest) (*DeleteTasksByIDResponse, error)
 	mustEmbedUnimplementedDataBaseServiceServer()
 }
 
@@ -143,11 +143,11 @@ type UnimplementedDataBaseServiceServer struct{}
 func (UnimplementedDataBaseServiceServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
-func (UnimplementedDataBaseServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+func (UnimplementedDataBaseServiceServer) GetUserByUsername(context.Context, *GetUserByUsernameRequest) (*GetUserByUsernameResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserByUsername not implemented")
 }
-func (UnimplementedDataBaseServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
+func (UnimplementedDataBaseServiceServer) DeleteUserByID(context.Context, *DeleteUserByIDRequest) (*DeleteUserByIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUserByID not implemented")
 }
 func (UnimplementedDataBaseServiceServer) CreateTask(context.Context, *CreateTaskRequest) (*CreateTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTask not implemented")
@@ -158,8 +158,8 @@ func (UnimplementedDataBaseServiceServer) GetTasks(context.Context, *GetTasksReq
 func (UnimplementedDataBaseServiceServer) UpdateTask(context.Context, *UpdateTaskRequest) (*UpdateTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTask not implemented")
 }
-func (UnimplementedDataBaseServiceServer) DeleteTasks(context.Context, *DeleteTasksRequest) (*DeleteTasksResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteTasks not implemented")
+func (UnimplementedDataBaseServiceServer) DeleteTasksByID(context.Context, *DeleteTasksByIDRequest) (*DeleteTasksByIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTasksByID not implemented")
 }
 func (UnimplementedDataBaseServiceServer) mustEmbedUnimplementedDataBaseServiceServer() {}
 func (UnimplementedDataBaseServiceServer) testEmbeddedByValue()                         {}
@@ -200,38 +200,38 @@ func _DataBaseService_CreateUser_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DataBaseService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserRequest)
+func _DataBaseService_GetUserByUsername_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserByUsernameRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DataBaseServiceServer).GetUser(ctx, in)
+		return srv.(DataBaseServiceServer).GetUserByUsername(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DataBaseService_GetUser_FullMethodName,
+		FullMethod: DataBaseService_GetUserByUsername_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DataBaseServiceServer).GetUser(ctx, req.(*GetUserRequest))
+		return srv.(DataBaseServiceServer).GetUserByUsername(ctx, req.(*GetUserByUsernameRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DataBaseService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteUserRequest)
+func _DataBaseService_DeleteUserByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserByIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DataBaseServiceServer).DeleteUser(ctx, in)
+		return srv.(DataBaseServiceServer).DeleteUserByID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DataBaseService_DeleteUser_FullMethodName,
+		FullMethod: DataBaseService_DeleteUserByID_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DataBaseServiceServer).DeleteUser(ctx, req.(*DeleteUserRequest))
+		return srv.(DataBaseServiceServer).DeleteUserByID(ctx, req.(*DeleteUserByIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,20 +290,20 @@ func _DataBaseService_UpdateTask_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DataBaseService_DeleteTasks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteTasksRequest)
+func _DataBaseService_DeleteTasksByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTasksByIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DataBaseServiceServer).DeleteTasks(ctx, in)
+		return srv.(DataBaseServiceServer).DeleteTasksByID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DataBaseService_DeleteTasks_FullMethodName,
+		FullMethod: DataBaseService_DeleteTasksByID_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DataBaseServiceServer).DeleteTasks(ctx, req.(*DeleteTasksRequest))
+		return srv.(DataBaseServiceServer).DeleteTasksByID(ctx, req.(*DeleteTasksByIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -320,12 +320,12 @@ var DataBaseService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DataBaseService_CreateUser_Handler,
 		},
 		{
-			MethodName: "GetUser",
-			Handler:    _DataBaseService_GetUser_Handler,
+			MethodName: "GetUserByUsername",
+			Handler:    _DataBaseService_GetUserByUsername_Handler,
 		},
 		{
-			MethodName: "DeleteUser",
-			Handler:    _DataBaseService_DeleteUser_Handler,
+			MethodName: "DeleteUserByID",
+			Handler:    _DataBaseService_DeleteUserByID_Handler,
 		},
 		{
 			MethodName: "CreateTask",
@@ -340,8 +340,8 @@ var DataBaseService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DataBaseService_UpdateTask_Handler,
 		},
 		{
-			MethodName: "DeleteTasks",
-			Handler:    _DataBaseService_DeleteTasks_Handler,
+			MethodName: "DeleteTasksByID",
+			Handler:    _DataBaseService_DeleteTasksByID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

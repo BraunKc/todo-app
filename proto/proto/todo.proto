@@ -1,0 +1,123 @@
+syntax = "proto3";
+package todo;
+option go_package = "braunkc/todo-proto/gen/go;todoGRPC";
+
+service DataBaseService {
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+    rpc GetUser(GetUserRequest) returns (GetUserResponse);
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+
+    rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+    rpc GetTasks(GetTasksRequest) returns (GetTasksResponse);
+    rpc UpdateTask(UpdateTaskRequest) returns (UpdateTaskResponse);
+    rpc DeleteTasks(DeleteTasksRequest) returns (DeleteTasksResponse);
+}
+
+message User {
+    string id = 1;
+    string username = 2;
+    string password_hash = 3;
+}
+
+message CreateUserRequest {
+    string username = 1;
+    string password_hash = 2;
+}
+message CreateUserResponse {
+    User user = 1;
+}
+
+message GetUserRequest {
+    string username = 1;
+}
+message GetUserResponse {
+    User user = 1;
+}
+
+message DeleteUserRequest {
+    string id = 1;
+}
+message DeleteUserResponse {}
+
+enum TaskStatus {
+    TODO = 0;
+    IN_PROGRESS = 1;
+    DONE = 2;
+}
+
+enum TaskPriority {
+    LOW = 0;
+    MEDIUM = 1;
+    HIGH = 2;
+}
+
+message Task {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    TaskStatus status = 4;
+    TaskPriority priority = 5;
+    int64 due_date = 6;
+    int64 created_at = 7;
+}
+
+message CreateTaskRequest {
+    string title = 1;
+    string description = 2;
+    TaskPriority priority = 3;
+    int64 due_date = 4;
+}
+message CreateTaskResponse {
+    Task task = 1;
+}
+
+message Filters {
+    repeated TaskStatus taskStatuses = 1;
+    repeated TaskPriority taskPriorities = 2;
+}
+
+enum SortField {
+    PRIORITY = 0;
+    DUE_DATE = 1;
+    CREATED_AT = 2;
+}
+
+enum SortDirection {
+    ASC = 0;
+    DESC = 1;
+}
+
+message OrderBy {
+    SortField field = 1;
+    SortDirection direction = 2;
+}
+
+message GetTasksRequest {
+    int64 page_size = 1;
+    int64 page_number = 2;
+    optional Filters filters = 3;
+    optional OrderBy order_by = 4;
+    optional string title = 5;
+}
+message GetTasksResponse {
+    repeated Task tasks = 1;
+    int64 total_count = 2;
+    int64 total_pages = 3;
+}
+
+message UpdateTaskRequest {
+    string id = 1;
+    optional string title = 2;
+    optional string description = 3;
+    optional TaskStatus status = 4;
+    optional TaskPriority priority = 5;
+    optional int64 due_date = 6; 
+}
+message UpdateTaskResponse {
+    Task task = 1;
+}
+
+message DeleteTasksRequest {
+    repeated string id = 1;
+}
+message DeleteTasksResponse {}

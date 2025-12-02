@@ -19,4 +19,5 @@ type Task struct {
 	Priority    uint8     `gorm:"not null"`
 	DueDate     int64
 	CreatedAt   int64 `gorm:"not null"`
+	User        User  `gorm:"foreignKey:UserID;references:ID;constraint:OnDelete:CASCADE"`
 }

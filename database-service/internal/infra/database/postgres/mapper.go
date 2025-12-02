@@ -60,5 +60,5 @@ func (r *mapper) TaskToModel(task *entities.Task) (*models.Task, error) {
 
 func (r *mapper) TaskToDomain(task *models.Task) *entities.Task {
 	return entities.NewTaskFromStorage(task.ID.String(), task.UserID.String(),
-		task.Title, task.Description, task.Status, task.Priority, task.DueDate)
+		task.Title, task.Description, task.Status, task.Priority, task.DueDate, task.CreatedAt)
 }

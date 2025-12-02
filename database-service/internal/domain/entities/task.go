@@ -58,7 +58,7 @@ func NewTask(userID, title, description string,
 }
 
 func NewTaskFromStorage(id, userID, title, description string,
-	status, priority uint8, dueDate int64) *Task {
+	status, priority uint8, dueDate, createdAt int64) *Task {
 	return &Task{
 		id:          id,
 		userID:      userID,
@@ -67,6 +67,7 @@ func NewTaskFromStorage(id, userID, title, description string,
 		status:      valueobjects.TaskStatus(status),
 		priority:    valueobjects.TaskPriority(priority),
 		dueDate:     valueobjects.TaskDueDate(dueDate),
+		createdAt:   createdAt,
 	}
 }
 

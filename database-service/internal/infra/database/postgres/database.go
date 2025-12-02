@@ -1,11 +1,13 @@
 package database
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/braunkc/todo-db/config"
 	"github.com/braunkc/todo-db/internal/application/repository"
 	"github.com/braunkc/todo-db/internal/domain/entities"
+	valueobjects "github.com/braunkc/todo-db/internal/domain/value_objects/query"
 	"github.com/braunkc/todo-db/internal/infra/database/postgres/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -16,13 +18,13 @@ type databaseRepository struct {
 	mapper Mapper
 }
 
-func NewDatabaseService(cfg *config.Config, mapper Mapper) (repository.TaskRepository, error) {
+func NewDatabaseService(cfg *config.Config, mapper Mapper) (repository.Repository, error) {
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s",
 		cfg.Database.Host, cfg.Database.Port,
 		cfg.Database.User, cfg.Database.Password, cfg.Database.Name)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		return nil, fmt.Errorf("failed to opeb database: %w", err)
+		return nil, fmt.Errorf("failed to open database: %w", err)
 	}
 
 	if err := db.AutoMigrate(&models.User{}); err != nil {
@@ -38,61 +40,95 @@ func NewDatabaseService(cfg *config.Config, mapper Mapper) (repository.TaskRepos
 	}, nil
 }
 
-func (r *databaseRepository) CreateUser(user *entities.User) error {
+func (r *databaseRepository) CreateUser(ctx context.Context, user *entities.User) (*entities.User, error) {
 	u, err := r.mapper.UserToModel(user)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return r.db.Create(u).Error
+	if err := r.db.WithContext(ctx).Create(u).Error; err != nil {
+		return nil, err
+	}
+
+	return r.mapper.UserToDomain(u), nil
 }
 
-func (r *databaseRepository) GetUserByUsername(username string) (*entities.User, error) {
+func (r *databaseRepository) GetUserByUsername(ctx context.Context, username string) (*entities.User, error) {
 	var user models.User
-	if err := r.db.First(&user, "username = ?", username).Error; err != nil {
+	if err := r.db.WithContext(ctx).First(&user, "username = ?", username).Error; err != nil {
 		return nil, err
 	}
 
 	return r.mapper.UserToDomain(&user), nil
 }
 
-func (r *databaseRepository) DeleteUserByID(id string) error {
-	return r.db.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Where("user_id = ?", id).Delete(&models.Task{}).Error; err != nil {
-			return err
-		}
-
-		return tx.Where("id = ?", id).Delete(&models.User{}).Error
-	})
+func (r *databaseRepository) DeleteUserByID(ctx context.Context, id string) error {
+	return r.db.WithContext(ctx).Where("id = ?", id).Delete(&models.User{}).Error
 }
 
-func (r *databaseRepository) CreateTask(task *entities.Task) error {
-	return r.db.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&models.User{}).Where("id = ?", task.UserID()).First(&models.User{}).Error; err != nil {
-			return err
-		}
+func (r *databaseRepository) CreateTask(ctx context.Context, task *entities.Task) (*entities.Task, error) {
+	t, err := r.mapper.TaskToModel(task)
+	if err != nil {
+		return nil, err
+	}
 
-		t, err := r.mapper.TaskToModel(task)
-		if err != nil {
-			return err
-		}
+	if err := r.db.WithContext(ctx).Create(t).Error; err != nil {
+		return nil, err
+	}
 
-		return tx.Create(t).Error
-	})
+	return r.mapper.TaskToDomain(t), nil
 }
 
-func (r *databaseRepository) GetTaskByID(ID string) (*entities.Task, error) {
+func (r *databaseRepository) GetTaskByID(ctx context.Context, ID string) (*entities.Task, error) {
 	var t models.Task
-	if err := r.db.Where("id = ?", ID).First(&t).Error; err != nil {
+	if err := r.db.WithContext(ctx).Where("id = ?", ID).First(&t).Error; err != nil {
 		return nil, err
 	}
 
 	return r.mapper.TaskToDomain(&t), nil
 }
 
-func (r *databaseRepository) GetTasks(userID string) ([]*entities.Task, error) {
+func (r *databaseRepository) GetTasks(ctx context.Context, query *valueobjects.GetTasksQuery) ([]*entities.Task, error) {
+	q := r.db.Model(&models.Task{}).Where("user_id = ?", query.UserID())
+
+	if len(query.Filters().Statuses) > 0 {
+		q = q.Where("status IN ?", query.Filters().Statuses)
+	}
+
+	if len(query.Filters().Priorities) > 0 {
+		q = q.Where("priority IN ?", query.Filters().Priorities)
+	}
+
+	if query.Title() != "" {
+		// ILIKE for postgres
+		// can be replace to LOWER(title) LIKE LOWER(?)
+		q = q.Where("title ILIKE ?", "%"+query.Title()+"%")
+	}
+
+	var orderField string
+	switch query.OrderBy().Field {
+	case valueobjects.SortByPriority:
+		orderField = "priority"
+	case valueobjects.SortByDueDate:
+		orderField = "due_date"
+	case valueobjects.SortByCreatedAt:
+		orderField = "created_at"
+	default:
+		orderField = "priority"
+	}
+
+	dir := "ASC"
+	if query.OrderBy().Direction == valueobjects.SortDesc {
+		dir = "DESC"
+	}
+
+	q = q.Order(orderField + " " + dir)
+
+	offset := (query.PageNumber() - 1) * query.PageSize()
+	q = q.Limit(int(query.PageSize())).Offset(int(offset))
+
 	var t []models.Task
-	if err := r.db.Where("user_id = ?", userID).Find(&t).Error; err != nil {
+	if err := q.WithContext(ctx).Find(&t).Error; err != nil {
 		return nil, err
 	}
 
@@ -104,15 +140,19 @@ func (r *databaseRepository) GetTasks(userID string) ([]*entities.Task, error) {
 	return tasks, nil
 }
 
-func (r *databaseRepository) UpdateTask(task *entities.Task) error {
+func (r *databaseRepository) UpdateTask(ctx context.Context, task *entities.Task) (*entities.Task, error) {
 	t, err := r.mapper.TaskToModel(task)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return r.db.Save(t).Error
+	if err := r.db.WithContext(ctx).Save(t).Error; err != nil {
+		return nil, err
+	}
+
+	return r.mapper.TaskToDomain(t), nil
 }
 
-func (r *databaseRepository) DeleteTasks(IDs []string) error {
-	return r.db.Where("id IN ?", IDs).Delete(&models.Task{}).Error
+func (r *databaseRepository) DeleteTasks(ctx context.Context, IDs []string) error {
+	return r.db.WithContext(ctx).Where("id IN ?", IDs).Delete(&models.Task{}).Error
 }

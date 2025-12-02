@@ -62,8 +62,8 @@ func (r *databaseRepository) GetUserByUsername(ctx context.Context, username str
 	return r.mapper.UserToDomain(&user), nil
 }
 
-func (r *databaseRepository) DeleteUserByID(ctx context.Context, id string) error {
-	return r.db.WithContext(ctx).Where("id = ?", id).Delete(&models.User{}).Error
+func (r *databaseRepository) DeleteUserByID(ctx context.Context, ID string) error {
+	return r.db.WithContext(ctx).Where("id = ?", ID).Delete(&models.User{}).Error
 }
 
 func (r *databaseRepository) CreateTask(ctx context.Context, task *entities.Task) (*entities.Task, error) {
@@ -88,7 +88,7 @@ func (r *databaseRepository) GetTaskByID(ctx context.Context, ID string) (*entit
 	return r.mapper.TaskToDomain(&t), nil
 }
 
-func (r *databaseRepository) GetTasks(ctx context.Context, query *valueobjects.GetTasksQuery) ([]*entities.Task, error) {
+func (r *databaseRepository) GetTasks(ctx context.Context, query *valueobjects.GetTasksQuery) ([]*entities.Task, int64, int64, error) {
 	q := r.db.Model(&models.Task{}).Where("user_id = ?", query.UserID())
 
 	if len(query.Filters().Statuses) > 0 {
@@ -103,6 +103,15 @@ func (r *databaseRepository) GetTasks(ctx context.Context, query *valueobjects.G
 		// ILIKE for postgres
 		// can be replace to LOWER(title) LIKE LOWER(?)
 		q = q.Where("title ILIKE ?", "%"+query.Title()+"%")
+	}
+
+	var totalCount int64
+	if err := q.WithContext(ctx).Count(&totalCount).Error; err != nil {
+		return nil, 0, 0, err
+	}
+
+	if totalCount == 0 {
+		return []*entities.Task{}, 0, 0, nil
 	}
 
 	var orderField string
@@ -129,7 +138,7 @@ func (r *databaseRepository) GetTasks(ctx context.Context, query *valueobjects.G
 
 	var t []models.Task
 	if err := q.WithContext(ctx).Find(&t).Error; err != nil {
-		return nil, err
+		return nil, 0, 0, err
 	}
 
 	var tasks []*entities.Task
@@ -137,7 +146,9 @@ func (r *databaseRepository) GetTasks(ctx context.Context, query *valueobjects.G
 		tasks = append(tasks, r.mapper.TaskToDomain(&task))
 	}
 
-	return tasks, nil
+	totalPages := (totalCount + query.PageSize() - 1) / query.PageSize()
+
+	return tasks, totalCount, totalPages, nil
 }
 
 func (r *databaseRepository) UpdateTask(ctx context.Context, task *entities.Task) (*entities.Task, error) {

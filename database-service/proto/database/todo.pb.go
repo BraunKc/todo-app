@@ -1113,7 +1113,7 @@ func (x *UpdateTaskResponse) GetTask() *Task {
 
 type DeleteTasksByIDRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            []string               `protobuf:"bytes,1,rep,name=id,proto3" json:"id,omitempty"`
+	Ids           []string               `protobuf:"bytes,1,rep,name=ids,proto3" json:"ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1148,9 +1148,9 @@ func (*DeleteTasksByIDRequest) Descriptor() ([]byte, []int) {
 	return file_todo_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *DeleteTasksByIDRequest) GetId() []string {
+func (x *DeleteTasksByIDRequest) GetIds() []string {
 	if x != nil {
-		return x.Id
+		return x.Ids
 	}
 	return nil
 }
@@ -1270,9 +1270,9 @@ const file_todo_proto_rawDesc = "" +
 	"\t_due_date\"4\n" +
 	"\x12UpdateTaskResponse\x12\x1e\n" +
 	"\x04task\x18\x01 \x01(\v2\n" +
-	".todo.TaskR\x04task\"(\n" +
-	"\x16DeleteTasksByIDRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x03(\tR\x02id\"\x19\n" +
+	".todo.TaskR\x04task\"*\n" +
+	"\x16DeleteTasksByIDRequest\x12\x10\n" +
+	"\x03ids\x18\x01 \x03(\tR\x03ids\"\x19\n" +
 	"\x17DeleteTasksByIDResponse*1\n" +
 	"\n" +
 	"TaskStatus\x12\b\n" +

@@ -14,7 +14,7 @@ type Repository interface {
 
 	CreateTask(ctx context.Context, task *entities.Task) (*entities.Task, error)
 	GetTaskByID(ctx context.Context, ID string) (*entities.Task, error)
-	GetTasks(ctx context.Context, query *valueobjects.GetTasksQuery) ([]*entities.Task, error)
+	GetTasks(ctx context.Context, query *valueobjects.GetTasksQuery) ([]*entities.Task, int64, int64, error)
 	UpdateTask(ctx context.Context, task *entities.Task) (*entities.Task, error)
 	DeleteTasks(ctx context.Context, IDs []string) error
 }

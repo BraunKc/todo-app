@@ -4,37 +4,12 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/braunkc/todo-db/config"
-	database "github.com/braunkc/todo-db/internal/infra/database/postgres"
-	"github.com/braunkc/todo-db/pkg/log"
+	"github.com/braunkc/todo-db/internal/app"
 )
 
 func main() {
-	logCfg := log.Config{
-		Service:    "database",
-		OutputType: log.Console,
-		Level:      slog.LevelDebug,
-	}
-
-	loggerHandler, err := log.NewHandler(&logCfg)
-	if err != nil {
-		slog.Error("failed to create logger handler", slog.String("err", err.Error()))
+	if err := app.Run(); err != nil {
+		slog.Error("app failed", slog.String("err", err.Error()))
 		os.Exit(1)
 	}
-	l := slog.New(loggerHandler)
-
-	cfg, err := config.New()
-	if err != nil {
-		l.Error("failed to init config", slog.String("err", err.Error()))
-		os.Exit(1)
-	}
-	l.Info("config inited", slog.Any("cfg", cfg))
-
-	mapper := database.NewMapper()
-	db, err := database.NewDatabaseService(cfg, mapper)
-	if err != nil {
-		l.Error("failed to connect to DB", slog.String("err", err.Error()))
-		os.Exit(1)
-	}
-	l.Info("successful connected to DB")
 }

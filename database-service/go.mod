@@ -3,6 +3,7 @@ module github.com/braunkc/todo-db
 go 1.25.1
 
 require (
+	github.com/goccy/go-yaml v1.19.0
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
 	golang.org/x/crypto v0.43.0

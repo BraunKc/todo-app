@@ -1,12 +1,17 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
+	"github.com/goccy/go-yaml"
 	"github.com/joho/godotenv"
 )
 
 type Config struct {
+	GRPCServer struct {
+		Port string `yaml:"port"`
+	} `yaml:"grpc-server"`
 	Database struct {
 		Host     string
 		Port     string
@@ -17,7 +22,15 @@ type Config struct {
 }
 
 func New() (*Config, error) {
+	file, err := os.ReadFile("./config/config.yml")
+	if err != nil {
+		return nil, fmt.Errorf("failed to read file: %w", err)
+	}
+
 	var cfg Config
+	if err := yaml.Unmarshal(file, &cfg); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal yaml: %w", err)
+	}
 
 	if err := godotenv.Load(".env"); err != nil {
 		return nil, err

@@ -107,11 +107,11 @@ type GetTasksResponse struct {
 
 type UpdateTaskRequest struct {
 	ID          string
-	Title       string
-	Description string
-	Status      TaskStatus
-	Priority    TaskPriority
-	DueDate     int64
+	Title       *string
+	Description *string
+	Status      *TaskStatus
+	Priority    *TaskPriority
+	DueDate     *int64
 }
 
 type UpdateTaskResponse struct {

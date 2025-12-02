@@ -277,7 +277,7 @@ func (x *User) GetPasswordHash() string {
 type CreateUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	PasswordHash  string                 `protobuf:"bytes,2,opt,name=password_hash,json=passwordHash,proto3" json:"password_hash,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -319,9 +319,9 @@ func (x *CreateUserRequest) GetUsername() string {
 	return ""
 }
 
-func (x *CreateUserRequest) GetPasswordHash() string {
+func (x *CreateUserRequest) GetPassword() string {
 	if x != nil {
-		return x.PasswordHash
+		return x.Password
 	}
 	return ""
 }
@@ -1199,10 +1199,10 @@ const file_todo_proto_rawDesc = "" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12#\n" +
-	"\rpassword_hash\x18\x03 \x01(\tR\fpasswordHash\"T\n" +
+	"\rpassword_hash\x18\x03 \x01(\tR\fpasswordHash\"K\n" +
 	"\x11CreateUserRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12#\n" +
-	"\rpassword_hash\x18\x02 \x01(\tR\fpasswordHash\"4\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"4\n" +
 	"\x12CreateUserResponse\x12\x1e\n" +
 	"\x04user\x18\x01 \x01(\v2\n" +
 	".todo.UserR\x04user\"6\n" +

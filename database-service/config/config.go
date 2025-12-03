@@ -10,7 +10,7 @@ import (
 
 type Config struct {
 	GRPCServer struct {
-		Port string `yaml:"port"`
+		Addr string `yaml:"addr"`
 	} `yaml:"grpc-server"`
 	Database struct {
 		Host     string

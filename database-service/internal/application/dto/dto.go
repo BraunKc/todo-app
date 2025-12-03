@@ -47,6 +47,7 @@ const (
 
 type Task struct {
 	ID          string
+	UserID      string
 	Title       string
 	Description string
 	Status      TaskStatus
@@ -63,6 +64,14 @@ type CreateTaskRequest struct {
 }
 
 type CreateTaskResponse struct {
+	Task Task
+}
+
+type GetTaskRequest struct {
+	ID string
+}
+
+type GetTaskResponse struct {
 	Task Task
 }
 

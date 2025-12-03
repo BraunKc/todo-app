@@ -47,7 +47,7 @@ func Run() error {
 
 	server := grpcServer.New(usecasesService)
 
-	listener, err := net.Listen("tcp", cfg.GRPCServer.Port)
+	listener, err := net.Listen("tcp", cfg.GRPCServer.Addr)
 	if err != nil {
 		return fmt.Errorf("failed to create tcp listener: %w", err)
 	}

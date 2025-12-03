@@ -542,12 +542,13 @@ func (*DeleteUserByIDResponse) Descriptor() ([]byte, []int) {
 type Task struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Status        TaskStatus             `protobuf:"varint,4,opt,name=status,proto3,enum=todo.TaskStatus" json:"status,omitempty"`
-	Priority      TaskPriority           `protobuf:"varint,5,opt,name=priority,proto3,enum=todo.TaskPriority" json:"priority,omitempty"`
-	DueDate       int64                  `protobuf:"varint,6,opt,name=due_date,json=dueDate,proto3" json:"due_date,omitempty"`
-	CreatedAt     int64                  `protobuf:"varint,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	Status        TaskStatus             `protobuf:"varint,5,opt,name=status,proto3,enum=todo.TaskStatus" json:"status,omitempty"`
+	Priority      TaskPriority           `protobuf:"varint,6,opt,name=priority,proto3,enum=todo.TaskPriority" json:"priority,omitempty"`
+	DueDate       int64                  `protobuf:"varint,7,opt,name=due_date,json=dueDate,proto3" json:"due_date,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -585,6 +586,13 @@ func (*Task) Descriptor() ([]byte, []int) {
 func (x *Task) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *Task) GetUserId() string {
+	if x != nil {
+		return x.UserId
 	}
 	return ""
 }
@@ -743,6 +751,94 @@ func (x *CreateTaskResponse) GetTask() *Task {
 	return nil
 }
 
+type GetTaskRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTaskRequest) Reset() {
+	*x = GetTaskRequest{}
+	mi := &file_todo_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTaskRequest) ProtoMessage() {}
+
+func (x *GetTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_todo_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTaskRequest.ProtoReflect.Descriptor instead.
+func (*GetTaskRequest) Descriptor() ([]byte, []int) {
+	return file_todo_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetTaskRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetTaskResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Task          *Task                  `protobuf:"bytes,1,opt,name=task,proto3" json:"task,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTaskResponse) Reset() {
+	*x = GetTaskResponse{}
+	mi := &file_todo_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTaskResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTaskResponse) ProtoMessage() {}
+
+func (x *GetTaskResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_todo_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTaskResponse.ProtoReflect.Descriptor instead.
+func (*GetTaskResponse) Descriptor() ([]byte, []int) {
+	return file_todo_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetTaskResponse) GetTask() *Task {
+	if x != nil {
+		return x.Task
+	}
+	return nil
+}
+
 type Filters struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	TaskStatuses   []TaskStatus           `protobuf:"varint,1,rep,packed,name=taskStatuses,proto3,enum=todo.TaskStatus" json:"taskStatuses,omitempty"`
@@ -753,7 +849,7 @@ type Filters struct {
 
 func (x *Filters) Reset() {
 	*x = Filters{}
-	mi := &file_todo_proto_msgTypes[10]
+	mi := &file_todo_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -765,7 +861,7 @@ func (x *Filters) String() string {
 func (*Filters) ProtoMessage() {}
 
 func (x *Filters) ProtoReflect() protoreflect.Message {
-	mi := &file_todo_proto_msgTypes[10]
+	mi := &file_todo_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -778,7 +874,7 @@ func (x *Filters) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Filters.ProtoReflect.Descriptor instead.
 func (*Filters) Descriptor() ([]byte, []int) {
-	return file_todo_proto_rawDescGZIP(), []int{10}
+	return file_todo_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *Filters) GetTaskStatuses() []TaskStatus {
@@ -805,7 +901,7 @@ type OrderBy struct {
 
 func (x *OrderBy) Reset() {
 	*x = OrderBy{}
-	mi := &file_todo_proto_msgTypes[11]
+	mi := &file_todo_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -817,7 +913,7 @@ func (x *OrderBy) String() string {
 func (*OrderBy) ProtoMessage() {}
 
 func (x *OrderBy) ProtoReflect() protoreflect.Message {
-	mi := &file_todo_proto_msgTypes[11]
+	mi := &file_todo_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -830,7 +926,7 @@ func (x *OrderBy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderBy.ProtoReflect.Descriptor instead.
 func (*OrderBy) Descriptor() ([]byte, []int) {
-	return file_todo_proto_rawDescGZIP(), []int{11}
+	return file_todo_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *OrderBy) GetField() SortField {
@@ -860,7 +956,7 @@ type GetTasksRequest struct {
 
 func (x *GetTasksRequest) Reset() {
 	*x = GetTasksRequest{}
-	mi := &file_todo_proto_msgTypes[12]
+	mi := &file_todo_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -872,7 +968,7 @@ func (x *GetTasksRequest) String() string {
 func (*GetTasksRequest) ProtoMessage() {}
 
 func (x *GetTasksRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_todo_proto_msgTypes[12]
+	mi := &file_todo_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -885,7 +981,7 @@ func (x *GetTasksRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTasksRequest.ProtoReflect.Descriptor instead.
 func (*GetTasksRequest) Descriptor() ([]byte, []int) {
-	return file_todo_proto_rawDescGZIP(), []int{12}
+	return file_todo_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetTasksRequest) GetPageSize() int64 {
@@ -934,7 +1030,7 @@ type GetTasksResponse struct {
 
 func (x *GetTasksResponse) Reset() {
 	*x = GetTasksResponse{}
-	mi := &file_todo_proto_msgTypes[13]
+	mi := &file_todo_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -946,7 +1042,7 @@ func (x *GetTasksResponse) String() string {
 func (*GetTasksResponse) ProtoMessage() {}
 
 func (x *GetTasksResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_todo_proto_msgTypes[13]
+	mi := &file_todo_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -959,7 +1055,7 @@ func (x *GetTasksResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTasksResponse.ProtoReflect.Descriptor instead.
 func (*GetTasksResponse) Descriptor() ([]byte, []int) {
-	return file_todo_proto_rawDescGZIP(), []int{13}
+	return file_todo_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetTasksResponse) GetTasks() []*Task {
@@ -997,7 +1093,7 @@ type UpdateTaskRequest struct {
 
 func (x *UpdateTaskRequest) Reset() {
 	*x = UpdateTaskRequest{}
-	mi := &file_todo_proto_msgTypes[14]
+	mi := &file_todo_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1009,7 +1105,7 @@ func (x *UpdateTaskRequest) String() string {
 func (*UpdateTaskRequest) ProtoMessage() {}
 
 func (x *UpdateTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_todo_proto_msgTypes[14]
+	mi := &file_todo_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1022,7 +1118,7 @@ func (x *UpdateTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTaskRequest.ProtoReflect.Descriptor instead.
 func (*UpdateTaskRequest) Descriptor() ([]byte, []int) {
-	return file_todo_proto_rawDescGZIP(), []int{14}
+	return file_todo_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *UpdateTaskRequest) GetId() string {
@@ -1076,7 +1172,7 @@ type UpdateTaskResponse struct {
 
 func (x *UpdateTaskResponse) Reset() {
 	*x = UpdateTaskResponse{}
-	mi := &file_todo_proto_msgTypes[15]
+	mi := &file_todo_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1088,7 +1184,7 @@ func (x *UpdateTaskResponse) String() string {
 func (*UpdateTaskResponse) ProtoMessage() {}
 
 func (x *UpdateTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_todo_proto_msgTypes[15]
+	mi := &file_todo_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1101,7 +1197,7 @@ func (x *UpdateTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTaskResponse.ProtoReflect.Descriptor instead.
 func (*UpdateTaskResponse) Descriptor() ([]byte, []int) {
-	return file_todo_proto_rawDescGZIP(), []int{15}
+	return file_todo_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *UpdateTaskResponse) GetTask() *Task {
@@ -1120,7 +1216,7 @@ type DeleteTasksByIDRequest struct {
 
 func (x *DeleteTasksByIDRequest) Reset() {
 	*x = DeleteTasksByIDRequest{}
-	mi := &file_todo_proto_msgTypes[16]
+	mi := &file_todo_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1132,7 +1228,7 @@ func (x *DeleteTasksByIDRequest) String() string {
 func (*DeleteTasksByIDRequest) ProtoMessage() {}
 
 func (x *DeleteTasksByIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_todo_proto_msgTypes[16]
+	mi := &file_todo_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1145,7 +1241,7 @@ func (x *DeleteTasksByIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTasksByIDRequest.ProtoReflect.Descriptor instead.
 func (*DeleteTasksByIDRequest) Descriptor() ([]byte, []int) {
-	return file_todo_proto_rawDescGZIP(), []int{16}
+	return file_todo_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *DeleteTasksByIDRequest) GetIds() []string {
@@ -1163,7 +1259,7 @@ type DeleteTasksByIDResponse struct {
 
 func (x *DeleteTasksByIDResponse) Reset() {
 	*x = DeleteTasksByIDResponse{}
-	mi := &file_todo_proto_msgTypes[17]
+	mi := &file_todo_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1175,7 +1271,7 @@ func (x *DeleteTasksByIDResponse) String() string {
 func (*DeleteTasksByIDResponse) ProtoMessage() {}
 
 func (x *DeleteTasksByIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_todo_proto_msgTypes[17]
+	mi := &file_todo_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1188,7 +1284,7 @@ func (x *DeleteTasksByIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTasksByIDResponse.ProtoReflect.Descriptor instead.
 func (*DeleteTasksByIDResponse) Descriptor() ([]byte, []int) {
-	return file_todo_proto_rawDescGZIP(), []int{17}
+	return file_todo_proto_rawDescGZIP(), []int{19}
 }
 
 var File_todo_proto protoreflect.FileDescriptor
@@ -1214,22 +1310,28 @@ const file_todo_proto_rawDesc = "" +
 	".todo.UserR\x04user\"'\n" +
 	"\x15DeleteUserByIDRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"\x18\n" +
-	"\x16DeleteUserByIDResponse\"\xe2\x01\n" +
+	"\x16DeleteUserByIDResponse\"\xfb\x01\n" +
 	"\x04Task\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
-	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12(\n" +
-	"\x06status\x18\x04 \x01(\x0e2\x10.todo.TaskStatusR\x06status\x12.\n" +
-	"\bpriority\x18\x05 \x01(\x0e2\x12.todo.TaskPriorityR\bpriority\x12\x19\n" +
-	"\bdue_date\x18\x06 \x01(\x03R\adueDate\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x14\n" +
+	"\x05title\x18\x03 \x01(\tR\x05title\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12(\n" +
+	"\x06status\x18\x05 \x01(\x0e2\x10.todo.TaskStatusR\x06status\x12.\n" +
+	"\bpriority\x18\x06 \x01(\x0e2\x12.todo.TaskPriorityR\bpriority\x12\x19\n" +
+	"\bdue_date\x18\a \x01(\x03R\adueDate\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\a \x01(\x03R\tcreatedAt\"\x96\x01\n" +
+	"created_at\x18\b \x01(\x03R\tcreatedAt\"\x96\x01\n" +
 	"\x11CreateTaskRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12.\n" +
 	"\bpriority\x18\x03 \x01(\x0e2\x12.todo.TaskPriorityR\bpriority\x12\x19\n" +
 	"\bdue_date\x18\x04 \x01(\x03R\adueDate\"4\n" +
 	"\x12CreateTaskResponse\x12\x1e\n" +
+	"\x04task\x18\x01 \x01(\v2\n" +
+	".todo.TaskR\x04task\" \n" +
+	"\x0eGetTaskRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"1\n" +
+	"\x0fGetTaskResponse\x12\x1e\n" +
 	"\x04task\x18\x01 \x01(\v2\n" +
 	".todo.TaskR\x04task\"{\n" +
 	"\aFilters\x124\n" +
@@ -1291,14 +1393,15 @@ const file_todo_proto_rawDesc = "" +
 	"CREATED_AT\x10\x02*\"\n" +
 	"\rSortDirection\x12\a\n" +
 	"\x03ASC\x10\x00\x12\b\n" +
-	"\x04DESC\x10\x012\x82\x04\n" +
+	"\x04DESC\x10\x012\xba\x04\n" +
 	"\x0fDataBaseService\x12?\n" +
 	"\n" +
 	"CreateUser\x12\x17.todo.CreateUserRequest\x1a\x18.todo.CreateUserResponse\x12T\n" +
 	"\x11GetUserByUsername\x12\x1e.todo.GetUserByUsernameRequest\x1a\x1f.todo.GetUserByUsernameResponse\x12K\n" +
 	"\x0eDeleteUserByID\x12\x1b.todo.DeleteUserByIDRequest\x1a\x1c.todo.DeleteUserByIDResponse\x12?\n" +
 	"\n" +
-	"CreateTask\x12\x17.todo.CreateTaskRequest\x1a\x18.todo.CreateTaskResponse\x129\n" +
+	"CreateTask\x12\x17.todo.CreateTaskRequest\x1a\x18.todo.CreateTaskResponse\x126\n" +
+	"\aGetTask\x12\x14.todo.GetTaskRequest\x1a\x15.todo.GetTaskResponse\x129\n" +
 	"\bGetTasks\x12\x15.todo.GetTasksRequest\x1a\x16.todo.GetTasksResponse\x12?\n" +
 	"\n" +
 	"UpdateTask\x12\x17.todo.UpdateTaskRequest\x1a\x18.todo.UpdateTaskResponse\x12N\n" +
@@ -1317,7 +1420,7 @@ func file_todo_proto_rawDescGZIP() []byte {
 }
 
 var file_todo_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_todo_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_todo_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_todo_proto_goTypes = []any{
 	(TaskStatus)(0),                   // 0: todo.TaskStatus
 	(TaskPriority)(0),                 // 1: todo.TaskPriority
@@ -1333,14 +1436,16 @@ var file_todo_proto_goTypes = []any{
 	(*Task)(nil),                      // 11: todo.Task
 	(*CreateTaskRequest)(nil),         // 12: todo.CreateTaskRequest
 	(*CreateTaskResponse)(nil),        // 13: todo.CreateTaskResponse
-	(*Filters)(nil),                   // 14: todo.Filters
-	(*OrderBy)(nil),                   // 15: todo.OrderBy
-	(*GetTasksRequest)(nil),           // 16: todo.GetTasksRequest
-	(*GetTasksResponse)(nil),          // 17: todo.GetTasksResponse
-	(*UpdateTaskRequest)(nil),         // 18: todo.UpdateTaskRequest
-	(*UpdateTaskResponse)(nil),        // 19: todo.UpdateTaskResponse
-	(*DeleteTasksByIDRequest)(nil),    // 20: todo.DeleteTasksByIDRequest
-	(*DeleteTasksByIDResponse)(nil),   // 21: todo.DeleteTasksByIDResponse
+	(*GetTaskRequest)(nil),            // 14: todo.GetTaskRequest
+	(*GetTaskResponse)(nil),           // 15: todo.GetTaskResponse
+	(*Filters)(nil),                   // 16: todo.Filters
+	(*OrderBy)(nil),                   // 17: todo.OrderBy
+	(*GetTasksRequest)(nil),           // 18: todo.GetTasksRequest
+	(*GetTasksResponse)(nil),          // 19: todo.GetTasksResponse
+	(*UpdateTaskRequest)(nil),         // 20: todo.UpdateTaskRequest
+	(*UpdateTaskResponse)(nil),        // 21: todo.UpdateTaskResponse
+	(*DeleteTasksByIDRequest)(nil),    // 22: todo.DeleteTasksByIDRequest
+	(*DeleteTasksByIDResponse)(nil),   // 23: todo.DeleteTasksByIDResponse
 }
 var file_todo_proto_depIdxs = []int32{
 	4,  // 0: todo.CreateUserResponse.user:type_name -> todo.User
@@ -1349,35 +1454,38 @@ var file_todo_proto_depIdxs = []int32{
 	1,  // 3: todo.Task.priority:type_name -> todo.TaskPriority
 	1,  // 4: todo.CreateTaskRequest.priority:type_name -> todo.TaskPriority
 	11, // 5: todo.CreateTaskResponse.task:type_name -> todo.Task
-	0,  // 6: todo.Filters.taskStatuses:type_name -> todo.TaskStatus
-	1,  // 7: todo.Filters.taskPriorities:type_name -> todo.TaskPriority
-	2,  // 8: todo.OrderBy.field:type_name -> todo.SortField
-	3,  // 9: todo.OrderBy.direction:type_name -> todo.SortDirection
-	14, // 10: todo.GetTasksRequest.filters:type_name -> todo.Filters
-	15, // 11: todo.GetTasksRequest.order_by:type_name -> todo.OrderBy
-	11, // 12: todo.GetTasksResponse.tasks:type_name -> todo.Task
-	0,  // 13: todo.UpdateTaskRequest.status:type_name -> todo.TaskStatus
-	1,  // 14: todo.UpdateTaskRequest.priority:type_name -> todo.TaskPriority
-	11, // 15: todo.UpdateTaskResponse.task:type_name -> todo.Task
-	5,  // 16: todo.DataBaseService.CreateUser:input_type -> todo.CreateUserRequest
-	7,  // 17: todo.DataBaseService.GetUserByUsername:input_type -> todo.GetUserByUsernameRequest
-	9,  // 18: todo.DataBaseService.DeleteUserByID:input_type -> todo.DeleteUserByIDRequest
-	12, // 19: todo.DataBaseService.CreateTask:input_type -> todo.CreateTaskRequest
-	16, // 20: todo.DataBaseService.GetTasks:input_type -> todo.GetTasksRequest
-	18, // 21: todo.DataBaseService.UpdateTask:input_type -> todo.UpdateTaskRequest
-	20, // 22: todo.DataBaseService.DeleteTasksByID:input_type -> todo.DeleteTasksByIDRequest
-	6,  // 23: todo.DataBaseService.CreateUser:output_type -> todo.CreateUserResponse
-	8,  // 24: todo.DataBaseService.GetUserByUsername:output_type -> todo.GetUserByUsernameResponse
-	10, // 25: todo.DataBaseService.DeleteUserByID:output_type -> todo.DeleteUserByIDResponse
-	13, // 26: todo.DataBaseService.CreateTask:output_type -> todo.CreateTaskResponse
-	17, // 27: todo.DataBaseService.GetTasks:output_type -> todo.GetTasksResponse
-	19, // 28: todo.DataBaseService.UpdateTask:output_type -> todo.UpdateTaskResponse
-	21, // 29: todo.DataBaseService.DeleteTasksByID:output_type -> todo.DeleteTasksByIDResponse
-	23, // [23:30] is the sub-list for method output_type
-	16, // [16:23] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	11, // 6: todo.GetTaskResponse.task:type_name -> todo.Task
+	0,  // 7: todo.Filters.taskStatuses:type_name -> todo.TaskStatus
+	1,  // 8: todo.Filters.taskPriorities:type_name -> todo.TaskPriority
+	2,  // 9: todo.OrderBy.field:type_name -> todo.SortField
+	3,  // 10: todo.OrderBy.direction:type_name -> todo.SortDirection
+	16, // 11: todo.GetTasksRequest.filters:type_name -> todo.Filters
+	17, // 12: todo.GetTasksRequest.order_by:type_name -> todo.OrderBy
+	11, // 13: todo.GetTasksResponse.tasks:type_name -> todo.Task
+	0,  // 14: todo.UpdateTaskRequest.status:type_name -> todo.TaskStatus
+	1,  // 15: todo.UpdateTaskRequest.priority:type_name -> todo.TaskPriority
+	11, // 16: todo.UpdateTaskResponse.task:type_name -> todo.Task
+	5,  // 17: todo.DataBaseService.CreateUser:input_type -> todo.CreateUserRequest
+	7,  // 18: todo.DataBaseService.GetUserByUsername:input_type -> todo.GetUserByUsernameRequest
+	9,  // 19: todo.DataBaseService.DeleteUserByID:input_type -> todo.DeleteUserByIDRequest
+	12, // 20: todo.DataBaseService.CreateTask:input_type -> todo.CreateTaskRequest
+	14, // 21: todo.DataBaseService.GetTask:input_type -> todo.GetTaskRequest
+	18, // 22: todo.DataBaseService.GetTasks:input_type -> todo.GetTasksRequest
+	20, // 23: todo.DataBaseService.UpdateTask:input_type -> todo.UpdateTaskRequest
+	22, // 24: todo.DataBaseService.DeleteTasksByID:input_type -> todo.DeleteTasksByIDRequest
+	6,  // 25: todo.DataBaseService.CreateUser:output_type -> todo.CreateUserResponse
+	8,  // 26: todo.DataBaseService.GetUserByUsername:output_type -> todo.GetUserByUsernameResponse
+	10, // 27: todo.DataBaseService.DeleteUserByID:output_type -> todo.DeleteUserByIDResponse
+	13, // 28: todo.DataBaseService.CreateTask:output_type -> todo.CreateTaskResponse
+	15, // 29: todo.DataBaseService.GetTask:output_type -> todo.GetTaskResponse
+	19, // 30: todo.DataBaseService.GetTasks:output_type -> todo.GetTasksResponse
+	21, // 31: todo.DataBaseService.UpdateTask:output_type -> todo.UpdateTaskResponse
+	23, // 32: todo.DataBaseService.DeleteTasksByID:output_type -> todo.DeleteTasksByIDResponse
+	25, // [25:33] is the sub-list for method output_type
+	17, // [17:25] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_todo_proto_init() }
@@ -1385,15 +1493,15 @@ func file_todo_proto_init() {
 	if File_todo_proto != nil {
 		return
 	}
-	file_todo_proto_msgTypes[12].OneofWrappers = []any{}
 	file_todo_proto_msgTypes[14].OneofWrappers = []any{}
+	file_todo_proto_msgTypes[16].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_todo_proto_rawDesc), len(file_todo_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   18,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -79,7 +79,7 @@ func (r *databaseRepository) CreateTask(ctx context.Context, task *entities.Task
 	return r.mapper.TaskToDomain(t), nil
 }
 
-func (r *databaseRepository) GetTaskByID(ctx context.Context, ID string) (*entities.Task, error) {
+func (r *databaseRepository) GetTask(ctx context.Context, ID string) (*entities.Task, error) {
 	var t models.Task
 	if err := r.db.WithContext(ctx).Where("id = ?", ID).First(&t).Error; err != nil {
 		return nil, err

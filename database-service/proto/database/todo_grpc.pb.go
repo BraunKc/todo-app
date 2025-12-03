@@ -24,6 +24,7 @@ const (
 	DataBaseService_GetUserByUsername_FullMethodName = "/todo.DataBaseService/GetUserByUsername"
 	DataBaseService_DeleteUserByID_FullMethodName    = "/todo.DataBaseService/DeleteUserByID"
 	DataBaseService_CreateTask_FullMethodName        = "/todo.DataBaseService/CreateTask"
+	DataBaseService_GetTask_FullMethodName           = "/todo.DataBaseService/GetTask"
 	DataBaseService_GetTasks_FullMethodName          = "/todo.DataBaseService/GetTasks"
 	DataBaseService_UpdateTask_FullMethodName        = "/todo.DataBaseService/UpdateTask"
 	DataBaseService_DeleteTasksByID_FullMethodName   = "/todo.DataBaseService/DeleteTasksByID"
@@ -37,6 +38,7 @@ type DataBaseServiceClient interface {
 	GetUserByUsername(ctx context.Context, in *GetUserByUsernameRequest, opts ...grpc.CallOption) (*GetUserByUsernameResponse, error)
 	DeleteUserByID(ctx context.Context, in *DeleteUserByIDRequest, opts ...grpc.CallOption) (*DeleteUserByIDResponse, error)
 	CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*CreateTaskResponse, error)
+	GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*GetTaskResponse, error)
 	GetTasks(ctx context.Context, in *GetTasksRequest, opts ...grpc.CallOption) (*GetTasksResponse, error)
 	UpdateTask(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*UpdateTaskResponse, error)
 	DeleteTasksByID(ctx context.Context, in *DeleteTasksByIDRequest, opts ...grpc.CallOption) (*DeleteTasksByIDResponse, error)
@@ -90,6 +92,16 @@ func (c *dataBaseServiceClient) CreateTask(ctx context.Context, in *CreateTaskRe
 	return out, nil
 }
 
+func (c *dataBaseServiceClient) GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*GetTaskResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTaskResponse)
+	err := c.cc.Invoke(ctx, DataBaseService_GetTask_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *dataBaseServiceClient) GetTasks(ctx context.Context, in *GetTasksRequest, opts ...grpc.CallOption) (*GetTasksResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetTasksResponse)
@@ -128,6 +140,7 @@ type DataBaseServiceServer interface {
 	GetUserByUsername(context.Context, *GetUserByUsernameRequest) (*GetUserByUsernameResponse, error)
 	DeleteUserByID(context.Context, *DeleteUserByIDRequest) (*DeleteUserByIDResponse, error)
 	CreateTask(context.Context, *CreateTaskRequest) (*CreateTaskResponse, error)
+	GetTask(context.Context, *GetTaskRequest) (*GetTaskResponse, error)
 	GetTasks(context.Context, *GetTasksRequest) (*GetTasksResponse, error)
 	UpdateTask(context.Context, *UpdateTaskRequest) (*UpdateTaskResponse, error)
 	DeleteTasksByID(context.Context, *DeleteTasksByIDRequest) (*DeleteTasksByIDResponse, error)
@@ -152,6 +165,9 @@ func (UnimplementedDataBaseServiceServer) DeleteUserByID(context.Context, *Delet
 }
 func (UnimplementedDataBaseServiceServer) CreateTask(context.Context, *CreateTaskRequest) (*CreateTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTask not implemented")
+}
+func (UnimplementedDataBaseServiceServer) GetTask(context.Context, *GetTaskRequest) (*GetTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTask not implemented")
 }
 func (UnimplementedDataBaseServiceServer) GetTasks(context.Context, *GetTasksRequest) (*GetTasksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTasks not implemented")
@@ -255,6 +271,24 @@ func _DataBaseService_CreateTask_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DataBaseService_GetTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DataBaseServiceServer).GetTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DataBaseService_GetTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DataBaseServiceServer).GetTask(ctx, req.(*GetTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _DataBaseService_GetTasks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTasksRequest)
 	if err := dec(in); err != nil {
@@ -331,6 +365,10 @@ var DataBaseService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateTask",
 			Handler:    _DataBaseService_CreateTask_Handler,
+		},
+		{
+			MethodName: "GetTask",
+			Handler:    _DataBaseService_GetTask_Handler,
 		},
 		{
 			MethodName: "GetTasks",

@@ -22,6 +22,7 @@ type UsecasesService interface {
 	DeleteUserByID(ctx context.Context, req *dto.DeleteUserByIDRequest) (*dto.DeleteUserByIDResponse, error)
 
 	CreateTask(ctx context.Context, req *dto.CreateTaskRequest) (*dto.CreateTaskResponse, error)
+	GetTask(ctx context.Context, req *dto.GetTaskRequest) (*dto.GetTaskResponse, error)
 	GetTasks(ctx context.Context, req *dto.GetTasksRequest) (*dto.GetTasksResponse, error)
 	UpdateTask(ctx context.Context, req *dto.UpdateTaskRequest) (*dto.UpdateTaskResponse, error)
 	DeleteTasks(ctx context.Context, req *dto.DeleteTasksByIDRequest) (*dto.DeleteTasksByIDResponse, error)
@@ -94,15 +95,18 @@ func (u *usecasesService) CreateTask(ctx context.Context, req *dto.CreateTaskReq
 	}
 
 	return &dto.CreateTaskResponse{
-		Task: dto.Task{
-			ID:          resp.ID(),
-			Title:       resp.Title(),
-			Description: resp.Description(),
-			Status:      dto.TaskStatus(resp.Status()),
-			Priority:    dto.TaskPriority(resp.Priority()),
-			DueDate:     resp.DueDate(),
-			CreatedAt:   resp.CreatedAt(),
-		},
+		Task: mapTaskToDTO(resp),
+	}, nil
+}
+
+func (u *usecasesService) GetTask(ctx context.Context, req *dto.GetTaskRequest) (*dto.GetTaskResponse, error) {
+	task, err := u.repo.GetTask(ctx, req.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &dto.GetTaskResponse{
+		Task: mapTaskToDTO(task),
 	}, nil
 }
 
@@ -171,15 +175,7 @@ func (u *usecasesService) GetTasks(ctx context.Context, req *dto.GetTasksRequest
 
 	var tasks []dto.Task
 	for _, task := range resp {
-		tasks = append(tasks, dto.Task{
-			ID:          task.ID(),
-			Title:       task.Title(),
-			Description: task.Description(),
-			Status:      dto.TaskStatus(task.Status()),
-			Priority:    dto.TaskPriority(task.Priority()),
-			DueDate:     task.DueDate(),
-			CreatedAt:   task.CreatedAt(),
-		})
+		tasks = append(tasks, mapTaskToDTO(task))
 	}
 
 	return &dto.GetTasksResponse{
@@ -194,7 +190,7 @@ func (u *usecasesService) UpdateTask(ctx context.Context, req *dto.UpdateTaskReq
 		return nil, errors.ErrInvalidField
 	}
 
-	task, err := u.repo.GetTaskByID(ctx, req.ID)
+	task, err := u.repo.GetTask(ctx, req.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -235,18 +231,23 @@ func (u *usecasesService) UpdateTask(ctx context.Context, req *dto.UpdateTaskReq
 	}
 
 	return &dto.UpdateTaskResponse{
-		Task: dto.Task{
-			ID:          task.ID(),
-			Title:       task.Title(),
-			Description: task.Description(),
-			Status:      dto.TaskStatus(task.Status()),
-			Priority:    dto.TaskPriority(task.Priority()),
-			DueDate:     task.DueDate(),
-			CreatedAt:   task.CreatedAt(),
-		},
+		Task: mapTaskToDTO(task),
 	}, nil
 }
 
 func (u *usecasesService) DeleteTasks(ctx context.Context, req *dto.DeleteTasksByIDRequest) (*dto.DeleteTasksByIDResponse, error) {
 	return &dto.DeleteTasksByIDResponse{}, u.repo.DeleteTasks(ctx, req.IDs)
+}
+
+func mapTaskToDTO(t *entities.Task) dto.Task {
+	return dto.Task{
+		ID:          t.ID(),
+		UserID:      t.UserID(),
+		Title:       t.Title(),
+		Description: t.Description(),
+		Status:      dto.TaskStatus(t.Status()),
+		Priority:    dto.TaskPriority(t.Priority()),
+		DueDate:     t.DueDate(),
+		CreatedAt:   t.CreatedAt(),
+	}
 }

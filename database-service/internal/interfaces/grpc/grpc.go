@@ -21,6 +21,7 @@ type GRPCServerService interface {
 	DeleteUserByID(ctx context.Context, req *pb.DeleteUserByIDRequest) (*pb.DeleteUserByIDResponse, error)
 
 	CreateTask(ctx context.Context, req *pb.CreateTaskRequest) (*pb.CreateTaskResponse, error)
+	GetTask(ctx context.Context, req *pb.GetTaskRequest) (*pb.GetTaskResponse, error)
 	GetTasks(ctx context.Context, req *pb.GetTasksRequest) (*pb.GetTasksResponse, error)
 	UpdateTask(ctx context.Context, req *pb.UpdateTaskRequest) (*pb.UpdateTaskResponse, error)
 	DeleteTasksByID(ctx context.Context, req *pb.DeleteTasksByIDRequest) (*pb.DeleteTasksByIDResponse, error)
@@ -101,6 +102,21 @@ func (g *grpcServerService) CreateTask(ctx context.Context, req *pb.CreateTaskRe
 	}
 
 	return &pb.CreateTaskResponse{
+		Task: mapTaskToPB(resp.Task),
+	}, nil
+}
+
+func (g *grpcServerService) GetTask(ctx context.Context, req *pb.GetTaskRequest) (*pb.GetTaskResponse, error) {
+	r := dto.GetTaskRequest{
+		ID: req.Id,
+	}
+
+	resp, err := g.usecasesService.GetTask(ctx, &r)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.GetTaskResponse{
 		Task: mapTaskToPB(resp.Task),
 	}, nil
 }
@@ -235,6 +251,7 @@ func (g *grpcServerService) DeleteTasksByID(ctx context.Context, req *pb.DeleteT
 func mapTaskToPB(t dto.Task) *pb.Task {
 	return &pb.Task{
 		Id:          t.ID,
+		UserId:      t.UserID,
 		Title:       t.Title,
 		Description: t.Description,
 		Status:      pb.TaskStatus(t.Status),

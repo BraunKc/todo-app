@@ -1,2 +1,2 @@
 grpc-server:
-  port: :50051
+  addr: :50051

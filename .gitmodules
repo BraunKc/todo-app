@@ -1,0 +1,3 @@
+[submodule "api-service/pkg/log"]
+	path = api-service/pkg/log
+	url = https://github.com/braunkc/log

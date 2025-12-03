@@ -8,6 +8,7 @@ service DataBaseService {
     rpc DeleteUserByID(DeleteUserByIDRequest) returns (DeleteUserByIDResponse);
 
     rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+    rpc GetTask(GetTaskRequest) returns (GetTaskResponse);
     rpc GetTasks(GetTasksRequest) returns (GetTasksResponse);
     rpc UpdateTask(UpdateTaskRequest) returns (UpdateTaskResponse);
     rpc DeleteTasksByID(DeleteTasksByIDRequest) returns (DeleteTasksByIDResponse);
@@ -53,12 +54,13 @@ enum TaskPriority {
 
 message Task {
     string id = 1;
-    string title = 2;
-    string description = 3;
-    TaskStatus status = 4;
-    TaskPriority priority = 5;
-    int64 due_date = 6;
-    int64 created_at = 7;
+    string user_id = 2;
+    string title = 3;
+    string description = 4;
+    TaskStatus status = 5;
+    TaskPriority priority = 6;
+    int64 due_date = 7;
+    int64 created_at = 8;
 }
 
 message CreateTaskRequest {
@@ -68,6 +70,14 @@ message CreateTaskRequest {
     int64 due_date = 4;
 }
 message CreateTaskResponse {
+    Task task = 1;
+}
+
+message GetTaskRequest {
+    string id = 1;
+}
+
+message GetTaskResponse {
     Task task = 1;
 }
 
@@ -118,6 +128,6 @@ message UpdateTaskResponse {
 }
 
 message DeleteTasksByIDRequest {
-    repeated string id = 1;
+    repeated string ids = 1;
 }
 message DeleteTasksByIDResponse {}

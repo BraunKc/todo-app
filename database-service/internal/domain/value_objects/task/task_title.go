@@ -3,7 +3,7 @@ package valueobjects
 import (
 	"strings"
 
-	"github.com/braunkc/todo-db/pkg/errors"
+	"github.com/braunkc/todo-app/database-service/pkg/errors"
 )
 
 type TaskTitle string

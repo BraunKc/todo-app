@@ -2,10 +2,11 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/braunkc/todo-db/internal/application/dto"
-	"github.com/braunkc/todo-db/internal/application/usecases"
-	pb "github.com/braunkc/todo-db/proto/database"
+	"github.com/braunkc/todo-app/database-service/internal/application/dto"
+	"github.com/braunkc/todo-app/database-service/internal/application/usecases"
+	pb "github.com/braunkc/todo-app/database-service/proto/database"
 	"google.golang.org/grpc"
 )
 
@@ -105,14 +106,18 @@ func (g *grpcServerService) CreateTask(ctx context.Context, req *pb.CreateTaskRe
 }
 
 func (g *grpcServerService) GetTasks(ctx context.Context, req *pb.GetTasksRequest) (*pb.GetTasksResponse, error) {
-	taskStatuses := make([]dto.TaskStatus, 0, len(req.Filters.TaskStatuses))
-	for _, status := range req.Filters.TaskStatuses {
-		taskStatuses = append(taskStatuses, dto.TaskStatus(status))
-	}
+	taskStatuses := make([]dto.TaskStatus, 0)
+	taskPriorities := make([]dto.TaskPriority, 0)
+	if req.Filters != nil {
+		taskStatuses = make([]dto.TaskStatus, 0, len(req.Filters.TaskStatuses))
+		for _, status := range req.Filters.TaskStatuses {
+			taskStatuses = append(taskStatuses, dto.TaskStatus(status))
+		}
 
-	taskPriorities := make([]dto.TaskPriority, 0, len(req.Filters.TaskPriorities))
-	for _, priority := range req.Filters.TaskPriorities {
-		taskPriorities = append(taskPriorities, dto.TaskPriority(priority))
+		taskPriorities = make([]dto.TaskPriority, 0, len(req.Filters.TaskPriorities))
+		for _, priority := range req.Filters.TaskPriorities {
+			taskPriorities = append(taskPriorities, dto.TaskPriority(priority))
+		}
 	}
 
 	if req.Title == nil {
@@ -170,23 +175,29 @@ func ptr[T any](v T) *T {
 
 func (g *grpcServerService) UpdateTask(ctx context.Context, req *pb.UpdateTaskRequest) (*pb.UpdateTaskResponse, error) {
 	var status *dto.TaskStatus
-	switch req.Status {
-	case pb.TaskStatus_TODO.Enum():
-		status = ptr(dto.TaskStatusTodo)
-	case pb.TaskStatus_IN_PROGRESS.Enum():
-		status = ptr(dto.TaskStatusInProgress)
-	case pb.TaskStatus_DONE.Enum():
-		status = ptr(dto.TaskStatusDone)
+	if req.Status != nil {
+		switch *req.Status {
+		case *pb.TaskStatus_TODO.Enum():
+			status = ptr(dto.TaskStatusTodo)
+		case *pb.TaskStatus_IN_PROGRESS.Enum():
+			status = ptr(dto.TaskStatusInProgress)
+		case *pb.TaskStatus_DONE.Enum():
+			fmt.Println("done inner")
+			status = ptr(dto.TaskStatusDone)
+		}
 	}
 
 	var priority *dto.TaskPriority
-	switch req.Priority {
-	case pb.TaskPriority_LOW.Enum():
-		priority = ptr(dto.TaskPriorityLow)
-	case pb.TaskPriority_MEDIUM.Enum():
-		priority = ptr(dto.TaskPriorityMedium)
-	case pb.TaskPriority_HIGH.Enum():
-		priority = ptr(dto.TaskPriorityHigh)
+	if req.Priority != nil {
+		switch *req.Priority {
+		case *pb.TaskPriority_LOW.Enum():
+			priority = ptr(dto.TaskPriorityLow)
+		case *pb.TaskPriority_MEDIUM.Enum():
+			priority = ptr(dto.TaskPriorityMedium)
+		case *pb.TaskPriority_HIGH.Enum():
+			fmt.Println("hight inner")
+			priority = ptr(dto.TaskPriorityHigh)
+		}
 	}
 
 	r := dto.UpdateTaskRequest{

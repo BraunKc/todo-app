@@ -3,7 +3,7 @@ package entities
 import (
 	"time"
 
-	valueobjects "github.com/braunkc/todo-db/internal/domain/value_objects/task"
+	valueobjects "github.com/braunkc/todo-app/database-service/internal/domain/value_objects/task"
 	"github.com/google/uuid"
 )
 

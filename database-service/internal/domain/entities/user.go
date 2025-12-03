@@ -3,7 +3,7 @@ package entities
 import (
 	"fmt"
 
-	valueobjects "github.com/braunkc/todo-db/internal/domain/value_objects/user"
+	valueobjects "github.com/braunkc/todo-app/database-service/internal/domain/value_objects/user"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/braunkc/todo-db/pkg/errors"
+	"github.com/braunkc/todo-app/database-service/pkg/errors"
 )
 
 type Username string

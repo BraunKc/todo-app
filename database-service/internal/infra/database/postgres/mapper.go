@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/braunkc/todo-db/internal/domain/entities"
-	"github.com/braunkc/todo-db/internal/infra/database/postgres/models"
+	"github.com/braunkc/todo-app/database-service/internal/domain/entities"
+	"github.com/braunkc/todo-app/database-service/internal/infra/database/postgres/models"
 	"github.com/google/uuid"
 )
 

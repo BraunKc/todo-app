@@ -3,11 +3,13 @@ package usecases
 import (
 	"context"
 
-	"github.com/braunkc/todo-db/internal/application/dto"
-	"github.com/braunkc/todo-db/internal/application/repository"
-	"github.com/braunkc/todo-db/internal/domain/entities"
-	valueobjects "github.com/braunkc/todo-db/internal/domain/value_objects/query"
-	"github.com/braunkc/todo-db/pkg/errors"
+	"github.com/braunkc/todo-app/database-service/internal/application/dto"
+	"github.com/braunkc/todo-app/database-service/internal/application/repository"
+	"github.com/braunkc/todo-app/database-service/internal/domain/entities"
+	valueobjects "github.com/braunkc/todo-app/database-service/internal/domain/value_objects/query"
+	"github.com/braunkc/todo-app/database-service/pkg/errors"
+	"github.com/google/uuid"
+	"google.golang.org/grpc/metadata"
 )
 
 type usecasesService struct {
@@ -71,12 +73,17 @@ func (u *usecasesService) DeleteUserByID(ctx context.Context, req *dto.DeleteUse
 }
 
 func (u *usecasesService) CreateTask(ctx context.Context, req *dto.CreateTaskRequest) (*dto.CreateTaskResponse, error) {
-	userID := ctx.Value("userID")
-	if userID == nil {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return nil, errors.ErrFailedGetMetadata
+	}
+	userIDs := md.Get("userID")
+	if len(userIDs) == 0 {
 		return nil, errors.ErrFailedGetUserIDFromContext
 	}
+	userID := userIDs[0]
 
-	task, err := entities.NewTask(userID.(string), req.Title, req.Description, 0, uint8(req.Priority), req.DueDate)
+	task, err := entities.NewTask(userID, req.Title, req.Description, 0, uint8(req.Priority), req.DueDate)
 	if err != nil {
 		return nil, err
 	}
@@ -100,10 +107,15 @@ func (u *usecasesService) CreateTask(ctx context.Context, req *dto.CreateTaskReq
 }
 
 func (u *usecasesService) GetTasks(ctx context.Context, req *dto.GetTasksRequest) (*dto.GetTasksResponse, error) {
-	userID := ctx.Value("userID")
-	if userID == nil {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return nil, errors.ErrFailedGetMetadata
+	}
+	userIDs := md.Get("userID")
+	if len(userIDs) == 0 {
 		return nil, errors.ErrFailedGetUserIDFromContext
 	}
+	userID := userIDs[0]
 
 	var taskStatuses []valueobjects.TaskStatus
 	for _, status := range req.Filters.TaskStatuses {
@@ -119,9 +131,35 @@ func (u *usecasesService) GetTasks(ctx context.Context, req *dto.GetTasksRequest
 		}
 	}
 
-	query, err := valueobjects.NewGetTasksQuery(userID.(string), req.PageSize, req.PageNumber,
-		valueobjects.SortField(req.OrderBy.Field), valueobjects.SortDirection(req.OrderBy.Direction),
-		taskStatuses, taskPriorities, req.Title)
+	var field valueobjects.SortField
+	switch req.OrderBy.Field {
+	case dto.Priority:
+		field = valueobjects.SortByPriority
+	case dto.DueDate:
+		field = valueobjects.SortByDueDate
+	case dto.CreatedAt:
+		field = valueobjects.SortByCreatedAt
+	default:
+		field = valueobjects.SortByPriority
+	}
+
+	var direction valueobjects.SortDirection
+	switch req.OrderBy.Direction {
+	case dto.Asc:
+		direction = valueobjects.SortAsc
+	case dto.Desc:
+		direction = valueobjects.SortDesc
+	default:
+		direction = valueobjects.SortAsc
+	}
+
+	query, err := valueobjects.NewGetTasksQuery(
+		userID,
+		req.PageSize, req.PageNumber,
+		field, direction,
+		taskStatuses, taskPriorities,
+		req.Title,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -152,6 +190,10 @@ func (u *usecasesService) GetTasks(ctx context.Context, req *dto.GetTasksRequest
 }
 
 func (u *usecasesService) UpdateTask(ctx context.Context, req *dto.UpdateTaskRequest) (*dto.UpdateTaskResponse, error) {
+	if _, err := uuid.Parse(req.ID); err != nil {
+		return nil, errors.ErrInvalidField
+	}
+
 	task, err := u.repo.GetTaskByID(ctx, req.ID)
 	if err != nil {
 		return nil, err

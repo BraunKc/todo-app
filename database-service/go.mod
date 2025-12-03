@@ -1,4 +1,4 @@
-module github.com/braunkc/todo-db
+module github.com/braunkc/todo-app/database-service
 
 go 1.25.1
 

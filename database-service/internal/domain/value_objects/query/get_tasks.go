@@ -1,7 +1,9 @@
 package valueobjects
 
 import (
-	"github.com/braunkc/todo-db/pkg/errors"
+	"fmt"
+
+	"github.com/braunkc/todo-app/database-service/pkg/errors"
 	"github.com/google/uuid"
 )
 
@@ -102,14 +104,17 @@ func NewGetTasksQuery(userID string, pageSize, pageNumber int64,
 
 func (q GetTasksQuery) Validate() error {
 	if _, err := uuid.Parse(q.userID); err != nil {
+		fmt.Println("uuid")
 		return errors.ErrInvalidField
 	}
 
 	if !q.isValidSortField() {
+		fmt.Println("field")
 		return errors.ErrInvalidField
 	}
 
 	if !q.isValidSortDirection() {
+		fmt.Println("dir")
 		return errors.ErrInvalidField
 	}
 
@@ -117,8 +122,12 @@ func (q GetTasksQuery) Validate() error {
 }
 
 func (q GetTasksQuery) isValidSortField() bool {
+	if q.orderBy.Field == "" {
+		fmt.Println("EMPTY FIELD")
+	}
+
 	switch q.orderBy.Field {
-	case SortByPriority, SortByDueDate, SortByCreatedAt:
+	case "", SortByPriority, SortByDueDate, SortByCreatedAt:
 		return true
 	default:
 		return false

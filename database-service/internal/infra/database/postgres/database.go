@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/braunkc/todo-db/config"
-	"github.com/braunkc/todo-db/internal/application/repository"
-	"github.com/braunkc/todo-db/internal/domain/entities"
-	valueobjects "github.com/braunkc/todo-db/internal/domain/value_objects/query"
-	"github.com/braunkc/todo-db/internal/infra/database/postgres/models"
+	"github.com/braunkc/todo-app/database-service/config"
+	"github.com/braunkc/todo-app/database-service/internal/application/repository"
+	"github.com/braunkc/todo-app/database-service/internal/domain/entities"
+	valueobjects "github.com/braunkc/todo-app/database-service/internal/domain/value_objects/query"
+	"github.com/braunkc/todo-app/database-service/internal/infra/database/postgres/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

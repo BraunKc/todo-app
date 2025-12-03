@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/braunkc/todo-db/internal/app"
+	"github.com/braunkc/todo-app/database-service/internal/app"
 )
 
 func main() {

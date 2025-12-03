@@ -10,11 +10,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/braunkc/todo-db/config"
-	"github.com/braunkc/todo-db/internal/application/usecases"
-	database "github.com/braunkc/todo-db/internal/infra/database/postgres"
-	grpcServer "github.com/braunkc/todo-db/internal/interfaces/grpc"
-	"github.com/braunkc/todo-db/pkg/log"
+	"github.com/braunkc/todo-app/database-service/config"
+	"github.com/braunkc/todo-app/database-service/internal/application/usecases"
+	database "github.com/braunkc/todo-app/database-service/internal/infra/database/postgres"
+	grpcServer "github.com/braunkc/todo-app/database-service/internal/interfaces/grpc"
+	"github.com/braunkc/todo-app/database-service/pkg/log"
 )
 
 func Run() error {

@@ -2,7 +2,6 @@ package grpc
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/braunkc/todo-app/database-service/internal/application/dto"
 	"github.com/braunkc/todo-app/database-service/internal/application/usecases"
@@ -198,7 +197,6 @@ func (g *grpcServerService) UpdateTask(ctx context.Context, req *pb.UpdateTaskRe
 		case *pb.TaskStatus_IN_PROGRESS.Enum():
 			status = ptr(dto.TaskStatusInProgress)
 		case *pb.TaskStatus_DONE.Enum():
-			fmt.Println("done inner")
 			status = ptr(dto.TaskStatusDone)
 		}
 	}
@@ -211,7 +209,6 @@ func (g *grpcServerService) UpdateTask(ctx context.Context, req *pb.UpdateTaskRe
 		case *pb.TaskPriority_MEDIUM.Enum():
 			priority = ptr(dto.TaskPriorityMedium)
 		case *pb.TaskPriority_HIGH.Enum():
-			fmt.Println("hight inner")
 			priority = ptr(dto.TaskPriorityHigh)
 		}
 	}

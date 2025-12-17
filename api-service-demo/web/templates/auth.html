@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <title>auth</title>
+</head>
+<body>
+
+    <div class="auth-card" id="authCard">
+        <form id="registrationForm" action="api/v1/register" method="POST">
+            <span class="title">registration</span>
+            <div class="form-inputs">
+                <input id="registratioEmail" name="username" type="text" placeholder="username">
+                <input id="registrationPassword" name="password" type="password" placeholder="password">
+                <input id="registrationSubmitPassword" name="confirm_password" type="password" placeholder="submit password">
+            </div>
+            <div class="form-btns">
+                <button type="submit">sign up</button>
+                <button id="toLogin" type="button">Already registered?</button>
+            </div>
+        </form>
+
+        <form id="loginForm" action="/api/v1/login" method="POST">
+            <span class="title">login</span>
+            <div class="form-inputs">
+                <input id="loginEmain" name="username" type="text" placeholder="username">
+                <input id="loginPassword" name="password" type="password" placeholder="password">
+            </div>
+            <div class="form-btns">
+                <button type="submit">sign in</button>
+                <button id="toRegistration" type="button">Not registered?</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/auth.js"></script>
+</body>
+</html>

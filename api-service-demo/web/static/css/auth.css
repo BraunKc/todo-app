@@ -1,0 +1,136 @@
+body {
+    background: radial-gradient(
+        circle at center,
+        lightblue 0%,
+        var(--bg) 30vh
+    );
+}
+
+.auth-card {
+    padding: 2vh;
+    width: clamp(400px, 20vw, 800px);
+    min-height: 30vh;
+
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2vh;
+    overflow: hidden;
+    
+    background-color: var(--glass);
+    border-radius: 2vw;
+}
+
+form {
+    padding: 2vh;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    transition: color .2s, transform .5s ease-in-out;
+}
+
+#registrationForm {
+    transform: translateY(100%);
+}
+
+.activate-login #loginForm {
+    transform: translateY(0);
+}
+
+.activate-login #registrationForm {
+    transform: translateY(-100%);
+}
+
+.activate-registration #loginForm {
+    transform: translateY(-100%);
+}
+
+.activate-registration #registrationForm {
+    transform: translateY(0);
+}
+
+.title {
+    font-size: 3vh;
+    color: var(--text);
+}
+
+.form-inputs {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+}
+
+input {
+    padding: 0 1vw 0 1vw;
+    
+    width: 60%;
+    height: clamp(20px, 4vh, 60px);
+    
+    border-radius: 1vh;
+    background-color: transparent;
+    color: var(--text-secondary);
+    font-family: Montserrat, sans-serif;
+    
+    transition: background-color .2s, color .2s, transform .2s;
+}
+
+input:hover {
+    background-color: var(--glass);
+    color: var(--text);
+    transform: scale(1.05);
+}
+
+input:focus {
+    background: var(--bg-light);
+    color: var(--text);
+    transform: scale(1.1);
+}
+
+.form-btns {  
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    gap: 1vh;
+}
+
+button {
+    padding: .5vh 1vh .5vh 1vh;
+
+    border-radius: 1vh;
+    color: var(--text-secondary);
+    background-color: transparent;
+    
+    transition: background-color .2s, color .2s, transform .2s;
+    
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--glass);
+    transform: scale(1.05);
+    color: var(--text);
+}
+
+@media (max-width: 600px) {
+    .auth-card {
+        width: 80vw;
+
+        border-radius: 5vh;
+    }
+}

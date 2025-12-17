@@ -1,0 +1,422 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-track {
+    margin: 3vh;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-light);
+}
+
+body.light {
+    --bg: hsl(0, 0%, 90%);
+    --bg-light: hsl(0, 0%, 95%);
+
+    --glass: hsl(0, 0%, 95%, .6);
+
+    --text: hsl(0, 0%, 5%);
+}
+
+body {
+    display: grid;
+    justify-content: center;
+    gap: 2vh;
+    grid-template-columns: clamp(500px, 80vw, 1000px);
+    grid-template-rows: auto 1fr;
+    background: var(--bg);
+    transition: background .2s;
+}
+
+.bg-circle {
+    height: 100vh; width: 100%;
+    position: absolute;
+    background: radial-gradient(
+        circle at center,
+        lightcoral 0%,
+        transparent 60vh
+    );
+    z-index: -1;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    width: fit-content;
+    height: clamp(20px, 5vh, 100px);
+    gap: 1vw;
+    margin-top: 2vh;
+    padding: 0 1vw 0 1vw;
+    border-radius: 2vh;
+    background-color: var(--glass);
+    transition: background .2s;
+}
+
+svg {
+    transition: background .1s, transform .2s;
+}
+
+svg * {
+    fill: var(--text-secondary);
+    stroke: var(--text-secondary);
+}
+
+header svg {
+    width: auto;
+    height: clamp(10px, 50%, 30px);
+    cursor: pointer;
+}
+
+header svg:hover {
+    transform: scale(1.1) rotate(-10deg);
+}
+
+header svg:active {
+    transform: scale(.9) rotate(-20deg);
+}
+
+header svg.light:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+header svg.light:active {
+    transform: scale(.9) rotate(20deg);
+}
+
+#theme-sun, #theme-rays, #theme-moon {
+    transform-origin: center;
+    fill: var(--text-secondary);
+    transition: opacity .3s, background .1s, transform .3s ease-in-out;
+}
+
+#theme-btn.light #theme-rays {
+    transform: rotate(270deg) scale(0);
+}
+
+#theme-moon {
+    transform: rotate(-270deg);
+}
+
+#theme-btn.light #theme-moon {
+    transform: rotate(0) scale(1.5);
+}
+
+#theme-btn.light #theme-sun {
+    transform: scale(0);
+    opacity: 0;
+}
+
+.container {
+    height: 85dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vh;
+    margin-bottom: 2vh;
+    padding: 2vh;
+    border-radius: 2vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background-color: var(--glass);
+    transition: background .2s;
+}
+
+.search-params-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#search {
+    padding: 1vh;
+    width: 30%;
+    border-radius: 2vh;
+    color: var(--text-secondary);
+    background-color: transparent;
+    transition: background-color .2s, transform .2s, color .2s;
+}
+
+#search:hover {
+    transform: scale(1.03);
+    background-color: var(--glass);
+}
+
+#search:focus {
+    transform: scale(1.05);
+    color: var(--text);
+    background-color: var(--glass);
+}
+
+#order-by {
+    padding: 1vh;
+    border-radius: 2vh;
+    color: var(--text-secondary);
+    font-family: Montserrat;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color .2s, transform .2s, color .2s;
+}
+
+#order-by:hover {
+    transform: scale(1.03);
+    color: var(--text);
+    background-color: var(--glass);
+}
+
+#filters-btn {
+    padding: 1vh;
+    border-radius: 2vh;
+    font-family: Montserrat;
+    color: var(--text-secondary);
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color .2s, transform .2s, color .2s;
+}
+
+#filters-btn:hover {
+    transform: scale(1.03);
+    color: var(--text);
+    background-color: var(--glass);
+}
+
+#filters {
+    padding: 2vh;
+    display: flex;
+    gap: 2vh;
+    position: fixed;
+    width: fit-content;
+    height: fit-content;
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    justify-self: center;
+    margin: auto;
+    border-radius: 2vh;
+    box-shadow: 0 0 30px 0 black;
+    background-color: var(--glass);
+    backdrop-filter: blur(5px);
+    color: var(--text);
+    transition: background .2s, transform .2s, opacity .2s, visibility .2s;
+}
+
+#filters.show {
+    visibility: visible;
+    pointer-events: all;
+    opacity: 100;
+    transform: translateY(0);
+}
+
+#filters div {
+    display: flex;
+    flex-direction: column;
+    gap: .5vh;
+}
+
+#filters label {
+    display: flex;
+    gap: 1vh;
+    justify-content: space-between;
+}
+
+.filters-checkbox {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkmark {
+    display: inline-block;
+    width: clamp(16px, 1vh, 24px);
+    height: clamp(16px, 1vh, 24px);
+    background-color: lightcoral;
+    border-radius: 1vh;
+    cursor: pointer;
+    transition: background .1s, transform .3s;
+}
+
+.checkmark:hover {
+    transform: scale(1.1);
+}
+
+.checkmark:active {
+    transform: scale(1);
+}
+
+.filters-checkbox:checked ~ .checkmark {
+    background-color: lightgreen;
+}
+
+#svg-create-container {
+    height: auto;
+    width: clamp(10px, 3%, 20px);
+    position: sticky;
+    align-self: flex-end;
+    top: 0;
+}
+
+#svg-create-container svg {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.task {
+    padding: 1vh;
+    width: 80%;
+    position: relative;
+    display: flex;
+    gap: 1vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 2vh;
+    box-sizing: border-box;
+    background-color: var(--glass);
+    transition: background .2s, transform .2s;
+}
+
+.task-options {
+    display: flex;
+}
+
+.task input {
+    padding: 2vh;
+    width: 80%;
+    height: 3vh;
+    border-radius: 2vh;
+    box-sizing: border-box;
+    color: var(--text-secondary);
+    font-size: clamp(16px, 2vh, 32px);
+    font-weight: 600;
+    text-align: start;
+    background-color: transparent;
+    transition: background .2s, transform .2s, color .2s;
+}
+
+.task input:hover {
+    transform: scale(1.03);
+    background-color: var(--glass);
+}
+
+.task input:focus {
+    transform: scale(1.05);
+    color: var(--text);
+    background-color: var(--glass);
+}
+
+.task textarea {
+    resize: none;
+    padding: 2vh;
+    width: 80%;
+    border-radius: 2vh;
+    box-sizing: border-box;
+    color: var(--text-secondary);
+    font-size: small;
+    font-family: Montserrat, sans-serif;
+    text-align: start;
+    background-color: transparent;
+    transition: background-color .2s, transform .2s, color .2s;
+}
+
+.task textarea:hover {
+    transform: scale(1.03);
+    background-color: var(--glass);
+}
+
+.task textarea:focus {
+    transform: scale(1.05);
+    color: var(--text);
+    background-color: var(--glass);
+}
+
+.task-options {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+input.task-due-date {
+    width: auto;
+    display: flex;
+    border-radius: 1vh;
+    font-weight: lighter;
+    font-size: medium;
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: crosshair;
+}
+
+.task-options select {
+    padding: 1vh;
+    background-color: transparent;
+    color: var(--text-secondary);
+    font-family: Montserrat, sans-serif;
+    font-size: small;
+    border-radius: 1vh;
+    cursor: pointer;
+    transition: background-color .2s, transform .2s, color .2s;
+}
+
+.task-options select:hover {
+    transform: scale(1.05);
+    color: var(--text);
+    background-color: var(--glass);
+}
+
+select option {
+    color: var(--text-secondary);
+    background-color: var(--bg-light);
+}
+
+.task .delete-btn {
+    position: absolute;
+    top: 15px; left: 15px;
+    height: 2vh;
+    color: var(--text-secondary);
+    cursor: pointer;
+    background-color: transparent;
+    transition: transform .2s;
+}
+
+.task:has(.delete-btn:hover) {
+    transform: scale(1.02);
+    background-color: hsla(0, 100%, 50%, 0.3);
+}
+
+.container svg:hover, .delete-btn:hover {
+    transform: scale(1.1);
+}
+
+.container svg:active, .delete-btn:active {
+    transform: scale(1);
+}
+
+
+@media (max-width: 1024px) {
+    body {
+        grid-template-columns: 95vw;
+    }
+
+    #svg-create-container {
+        z-index: 100;
+    }
+
+    .task {
+        padding: 3vh;
+        width: 100%;
+    }
+
+    .task-options {
+        flex-direction: column;
+        align-items: end;
+    }
+}

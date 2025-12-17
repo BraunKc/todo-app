@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  pg:
+    image: postgres:latest
+    container_name: todo-pg
+    environment:
+      POSTGRES_DB: todo
+      POSTGRES_USER: todo-app
+      POSTGRES_PASSWORD: ijwafdkofdnsvdnixalz
+    ports:
+      - "5432:5432"
+    networks:
+      - todo-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todo-app -d todo"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  todo-db-service:
+    image: todo-db-service
+    container_name: todo-db-service
+    ports:
+     - "50051:50051"
+    depends_on:
+      pg:
+        condition: service_healthy
+    networks:
+      - todo-network
+
+  todo-api-service:
+    image: todo-api-service
+    container_name: todo-api-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - todo-db-service
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
+    driver: bridge
